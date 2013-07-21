@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Raven.Client;
+using Raven.Client.Document;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,6 +25,22 @@ namespace SlickBlog.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            InitializeDocumentStore();
         }
+
+
+        public static IDocumentStore DocumentStore { get; private set; }
+
+        private static void InitializeDocumentStore()
+        {
+            if (DocumentStore != null) return; // prevent misuse
+
+            DocumentStore = new DocumentStore
+                                {
+                                    ConnectionStringName = "RavenDB"
+                                }.Initialize();
+        }
+
     }
 }
