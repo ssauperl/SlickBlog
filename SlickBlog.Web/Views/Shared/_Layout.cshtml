@@ -2,13 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title - SlickBlog</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
+        <link rel="stylesheet" href="~/Content/less/bootstrap.less" type="text/css"/>
         @Scripts.Render("~/bundles/modernizr")
     </head>
-    <body>
+    <body class="container-fluid">
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
@@ -36,13 +36,11 @@
         </div>
         <footer>
             <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                <div class="float-left">               
+                    <p>Copyright &copy; @DateTime.Now.Year <a href="#">Simon Šauperl</a></p>
                 </div>
             </div>
         </footer>
-
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/site")
     </body>
 </html>
