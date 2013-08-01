@@ -3,7 +3,13 @@
 // --------------------------------------------------
 
 
-// Quick floats
+// Floats
+// -------------------------
+
+.clearfix {
+  //this is causing stackoverflow exception with dotless, so we commented it out
+  //.clearfix();
+}
 .pull-right {
   float: right;
 }
@@ -11,20 +17,27 @@
   float: left;
 }
 
+
 // Toggling content
+// -------------------------
+
 .hide {
-  display: none;
+  display: none !important;
 }
 .show {
-  display: block;
+  display: block !important;
 }
-
-// Visibility
 .invisible {
   visibility: hidden;
 }
+.text-hide {
+  .hide-text();
+}
+
 
 // For Affix plugin
+// -------------------------
+
 .affix {
   position: fixed;
 }

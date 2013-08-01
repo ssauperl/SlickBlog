@@ -251,8 +251,6 @@
     <Compile Include="Security\ManageMessageId.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\images\glyphicons-halflings-white.png" />
-    <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -324,15 +322,8 @@
     <Content Include="Content\less\tooltip.less" />
     <Content Include="Content\less\thumbnails.less" />
     <Content Include="Content\less\tables.less" />
-    <Content Include="Content\less\sprites.less" />
     <Content Include="Content\less\scaffolding.less" />
     <Content Include="Content\less\responsive-utilities.less" />
-    <Content Include="Content\less\responsive-navbar.less" />
-    <Content Include="Content\less\responsive-768px-979px.less" />
-    <Content Include="Content\less\responsive-767px-max.less" />
-    <Content Include="Content\less\responsive-1200px-min.less" />
-    <Content Include="Content\less\responsive.less" />
-    <Content Include="Content\less\reset.less" />
     <Content Include="Content\less\progress-bars.less" />
     <Content Include="Content\less\popovers.less" />
     <Content Include="Content\less\pagination.less" />
@@ -342,9 +333,6 @@
     <Content Include="Content\less\modals.less" />
     <Content Include="Content\less\mixins.less" />
     <Content Include="Content\less\media.less" />
-    <Content Include="Content\less\layouts.less" />
-    <Content Include="Content\less\labels-badges.less" />
-    <Content Include="Content\less\hero-unit.less" />
     <Content Include="Content\less\grid.less" />
     <Content Include="Content\less\forms.less" />
     <Content Include="Content\less\dropdowns.less" />
