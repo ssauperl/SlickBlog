@@ -14,8 +14,9 @@ namespace SlickBlog.Web
             , "~/Scripts/lib/knockout-{version}.js"
             ));
 
+            #region defaultBundles
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/lib/jquery-ui-{version}.js"));
+                "~/Scripts/lib/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/lib/jquery.unobtrusive*",
@@ -40,7 +41,8 @@ namespace SlickBlog.Web
                         "~/Content/themes/base/jquery.ui.tabs.css",
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+                        "~/Content/themes/base/jquery.ui.theme.css")); 
+            #endregion
         }
     }
 }
