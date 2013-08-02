@@ -33,15 +33,21 @@
 }
 /*#endregion*/
 
+
+
 /*#region Header*/
 @nav-margin-bot: 20px;
+@menu-margin: 6px;
+
+body {
+    padding-top: 60px;
+}
 
 header {
     background-color: @main-color;
     display: block;
     overflow: hidden;
     padding: 0.4em 1em;
-
     //override bootstrap default a:hover for header
     a:hover {
         text-decoration: none;
@@ -82,7 +88,7 @@ header {
 
 #login {
     float: right;
-    margin-right: 6px;
+    margin-right: @menu-margin;
 }
 
 #login-button {
@@ -137,3 +143,45 @@ nav {
 .toggle-nav {
     display: none;
 }
+/*#endregion*/
+
+/*#region HeaderTablet*/
+@media (min-width: @screen-tablet) {
+    body {
+        padding-top: 0px;
+    }
+
+    header {
+        position: initial !important;
+    }
+
+    #menu-button {
+        display: none;
+    }
+
+    nav {
+        float: left;
+        clear: none;
+        margin-left: @menu-margin;
+
+        ul {
+            margin: 0px;
+
+            li {
+                border-radius: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+                float: left;
+
+                a:hover {
+                    background-color: @ldark-color;
+                }
+            }
+        }
+    }
+
+    .toggle-nav {
+        display: block;
+    }
+}
+/*#endregion*/

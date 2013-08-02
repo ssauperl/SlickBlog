@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
 using SlickBlog.Web.Models;
+using FlexProviders.Membership;
+using DotNetOpenAuth.AspNet.Clients;
 
 namespace SlickBlog.Web
 {
@@ -26,7 +28,11 @@ namespace SlickBlog.Web
             //    appId: "",
             //    appSecret: "");
 
-            OAuthWebSecurity.RegisterGoogleClient();
+            //OAuthWebSecurity.RegisterGoogleClient();
+
+            FlexMembershipProvider<User>.RegisterClient(
+                new GoogleOpenIdClient(),
+                "Google", new Dictionary<string, object>());
         }
     }
 }

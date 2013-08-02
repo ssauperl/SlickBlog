@@ -11,8 +11,18 @@ namespace SlickBlog.Web
             bundles.Add(new ScriptBundle("~/bundles/site").Include(
             "~/Scripts/lib/jquery-{version}.js"
             , "~/Scripts/lib/bootstrap.js"
+            , "~/Scripts/app/slick-style.js"
             , "~/Scripts/lib/knockout-{version}.js"
             ));
+
+            // Custom LESS files
+            var lessBundle = new Bundle("~/Content/Less").Include(
+            "~/Content/less/bootstrap.less"
+            );
+
+            lessBundle.Transforms.Add(new LessTransform());
+            lessBundle.Transforms.Add(new CssMinify());
+            bundles.Add(lessBundle);
 
             #region defaultBundles
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
