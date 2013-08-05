@@ -3,7 +3,7 @@ using FlexProviders.Aspnet;
 using FlexProviders.Membership;
 using FlexProviders.Raven;
 using FlexProviders.Roles;
-using SlickBlog.Web.Models;
+using SlickBlog.Model;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Modules;

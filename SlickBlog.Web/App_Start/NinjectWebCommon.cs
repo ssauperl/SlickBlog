@@ -3,7 +3,7 @@ using FlexProviders.Membership;
 using FlexProviders.Raven;
 using FlexProviders.Roles;
 using Laurelton.Web.Infrastructure.IoC;
-using SlickBlog.Web.Models;
+using SlickBlog.Model;
 using Microsoft.Practices.ServiceLocation;
 using NinjectAdapter;
 

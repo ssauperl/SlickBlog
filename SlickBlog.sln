@@ -13,12 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexProviders.Tests.Raven",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlickBlog.Web", "SlickBlog.Web\SlickBlog.Web.csproj", "{3781CAEA-1F82-434A-ADBD-4F056FE48A91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlickBlog.Web.Tests", "SlickBlog.Web.Tests\SlickBlog.Web.Tests.csproj", "{93CD8BCF-251C-42C1-B1C4-F7996F5DC7CC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DD73C0F0-E766-426A-8C8A-ACA4F092D0C2}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlickBlog.Model", "SlickBlog.Model\SlickBlog.Model.csproj", "{AEF4B5FC-6398-4D80-A1F1-B3EED694807C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spa.Web", "Spa.Web\Spa.Web.csproj", "{10B2E16A-C7A4-45FE-A2E1-746D130747A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +52,14 @@ Global
 		{3781CAEA-1F82-434A-ADBD-4F056FE48A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3781CAEA-1F82-434A-ADBD-4F056FE48A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3781CAEA-1F82-434A-ADBD-4F056FE48A91}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93CD8BCF-251C-42C1-B1C4-F7996F5DC7CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93CD8BCF-251C-42C1-B1C4-F7996F5DC7CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93CD8BCF-251C-42C1-B1C4-F7996F5DC7CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93CD8BCF-251C-42C1-B1C4-F7996F5DC7CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEF4B5FC-6398-4D80-A1F1-B3EED694807C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF4B5FC-6398-4D80-A1F1-B3EED694807C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF4B5FC-6398-4D80-A1F1-B3EED694807C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF4B5FC-6398-4D80-A1F1-B3EED694807C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10B2E16A-C7A4-45FE-A2E1-746D130747A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10B2E16A-C7A4-45FE-A2E1-746D130747A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10B2E16A-C7A4-45FE-A2E1-746D130747A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10B2E16A-C7A4-45FE-A2E1-746D130747A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

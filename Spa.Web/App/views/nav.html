@@ -1,0 +1,19 @@
+﻿<div id="logo">
+    <a href="#">Simon's blog</a>
+</div>
+
+<button type="button" id="menu-button" class="header-button">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+</button>
+
+<nav class="toggle-nav">
+    <ul id="menu" data-bind="foreach: router.visibleRoutes">
+        <li>
+            <a data-bind="attr: { href: hash },
+            css: { active: isActive },
+            html: caption"></a>
+        </li>
+    </ul>
+</nav>

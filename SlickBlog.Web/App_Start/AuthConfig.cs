@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
-using SlickBlog.Web.Models;
+using SlickBlog.Model;
 using FlexProviders.Membership;
 using DotNetOpenAuth.AspNet.Clients;
 

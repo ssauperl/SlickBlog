@@ -1,0 +1,57 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>SlickBlog</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/less")
+</head>
+<body>
+    <header class="navbar-fixed-top container">
+        <div id="logo">
+            <a href="#">Simon's blog</a>
+        </div>
+
+        <button type="button" id="menu-button" class="header-button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <section id="login">
+            <button type="button" id="login-button" class="header-button">
+                Login
+            </button>
+        </section>
+
+        <nav class="toggle-nav">
+            <ul id="menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="main" class="container clear-fix">
+
+    </section>
+
+    <footer class="container">
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>Copyright &copy; @DateTime.Now.Year <a href="#">Simon Šauperl</a></p>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render(
+        "~/bundles/jsextlibs",
+        "~/bundles/jsapplibs",
+        "~/Scripts/main.js"
+        )
+</body>
+</html>
+
+

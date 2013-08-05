@@ -229,22 +229,13 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\api\PostAPIController.cs" />
-    <Compile Include="Controllers\api\RavenDbAPIController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\RavenDbController.cs" />
     <Compile Include="DependencyResolution\RavenModule.cs" />
     <Compile Include="Filters\FlexAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Blog.cs" />
-    <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ManageMessageId.cs" />
   </ItemGroup>
@@ -311,6 +302,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\less\wells.less" />
@@ -344,13 +337,46 @@
     <Content Include="Content\less\bootstrap.less" />
     <Content Include="Content\less\alerts.less" />
     <Content Include="Content\less\accordion.less" />
+    <Content Include="Scripts\app\binder.js" />
+    <Content Include="Scripts\app\bootstrapper.js" />
+    <Content Include="Scripts\app\config.js" />
+    <Content Include="Scripts\app\datacontext.js" />
+    <Content Include="Scripts\app\dataprimer.js" />
+    <Content Include="Scripts\app\dataservice.js" />
+    <Content Include="Scripts\app\dataservice.user.js" />
+    <Content Include="Scripts\app\messenger.js" />
+    <Content Include="Scripts\app\model.js" />
+    <Content Include="Scripts\app\model.user.js" />
+    <Content Include="Scripts\app\model.post.js" />
+    <Content Include="Scripts\app\presenter.js" />
+    <Content Include="Scripts\app\route-config.js" />
+    <Content Include="Scripts\app\route-mediator.js" />
+    <Content Include="Scripts\app\router.js" />
     <Content Include="Scripts\app\slick-style.js" />
+    <Content Include="Scripts\app\sort.js" />
+    <Content Include="Scripts\app\store.js" />
+    <Content Include="Scripts\app\utils.js" />
+    <Content Include="Scripts\app\vm.js" />
+    <Content Include="Scripts\app\vm.user.js" />
+    <Content Include="Scripts\lib\knockout.activity.js" />
+    <Content Include="Scripts\lib\knockout.command.js" />
+    <Content Include="Scripts\lib\knockout.dirtyFlag.js" />
+    <Content Include="Scripts\knockout.validation.debug.js" />
+    <Content Include="Scripts\lib\knockout.validation.js" />
+    <Content Include="Scripts\lib\amplify.js" />
+    <Content Include="Scripts\lib\amplify.min.js" />
     <Content Include="Scripts\lib\bootstrap.js" />
     <Content Include="Scripts\lib\bootstrap.min.js" />
     <Content Include="Content\less-app\slick-style.less" />
     <Content Include="Content\less-app\colors.less" />
     <Content Include="Content\less-app\custom-style.less" />
     <Content Include="Content\fonts\EraserRegular.ttf" />
+    <Content Include="index.cshtml" />
+    <Content Include="Scripts\app\vm.post.js" />
+    <Content Include="Scripts\app\vm.posts.js" />
+    <Content Include="Scripts\app\dataservice.post.js" />
+    <Content Include="Scripts\app\model.mapper.js" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\lib\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\lib\jquery-2.0.3.js" />
     <Content Include="Scripts\lib\jquery-2.0.3.min.js" />
@@ -368,6 +394,15 @@
     <Content Include="Scripts\lib\knockout-2.3.0.js" />
     <Content Include="Scripts\lib\less.min.js" />
     <Content Include="Scripts\lib\modernizr-2.6.2.js" />
+    <Content Include="Scripts\lib\r.js" />
+    <Content Include="Scripts\lib\require.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\lib\underscore.js" />
+    <Content Include="Scripts\lib\sammy-0.7.4.js" />
+    <Content Include="Scripts\sammy-0.7.4.min.js" />
+    <Content Include="Scripts\lib\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -390,23 +425,25 @@
     <Content Include="Images\orderedList7.png" />
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\obsolete_ViewStart.cshtml" />
+    <Content Include="Views\obsoleteAccount\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\obsoleteAccount\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\obsoleteAccount\_RemoveExternalLoginsPartial.cshtml" />
+    <Content Include="Views\obsoleteAccount\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\obsoleteAccount\Login.cshtml" />
+    <Content Include="Views\obsoleteAccount\Manage.cshtml" />
+    <Content Include="Views\obsoleteAccount\Register.cshtml" />
+    <Content Include="Views\obsoleteAccount\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\obsoleteAccount\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\obsoleteHome\About.cshtml" />
+    <Content Include="Views\obsoleteHome\Contact.cshtml" />
+    <Content Include="Views\obsoleteHome\Index.cshtml" />
+    <Content Include="Views\obsoleteShared\Error.cshtml" />
+    <Content Include="Views\obsoleteShared\_LoginPartial.cshtml" />
+    <Content Include="Views\obsoleteShared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\posts.cshtml" />
+    <Content Include="Scripts\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -422,6 +459,10 @@
     <ProjectReference Include="..\FlexProviders\FlexProviders.csproj">
       <Project>{9c987907-bd64-4100-89d4-f4bcfb77768b}</Project>
       <Name>FlexProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SlickBlog.Model\SlickBlog.Model.csproj">
+      <Project>{aef4b5fc-6398-4d80-a1f1-b3eed694807c}</Project>
+      <Name>SlickBlog.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

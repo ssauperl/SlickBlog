@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - SlickBlog</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @*<link rel="stylesheet" href="~/Content/less/bootstrap.less" type="text/css"/>*@
+        @Styles.Render("~/Content/less")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <header class="navbar-fixed-top container">
+            @*<div class="container">*@
+                <div id="logo">
+                    @Html.ActionLink("your logo here", "Index", "Home")
+                </div>
+
+                <button type="button" id="menu-button" class="header-button">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <section id="login">
+                    @Html.Partial("_LoginPartial")
+                </section>
+                 <nav class="toggle-nav">
+                    <ul id="menu">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </nav>
+            @*</div>*@
+        </header>
+        <div id="body"  class="container">
+            @RenderSection("featured", required: false)
+            <div class="row clear-fix">
+                @RenderBody()
+            </div>
+        </div>
+        <footer class="container">
+            <div class="content-wrapper">
+                <div class="float-left">               
+                    <p>Copyright &copy; @DateTime.Now.Year <a href="#">Simon Šauperl</a></p>
+                </div>
+            </div>
+        </footer>
+        @Scripts.Render("~/bundles/site")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

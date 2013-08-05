@@ -1,0 +1,32 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>SlickBlog</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/less")
+</head>
+<body>
+    <div id="applicationHost">
+       @RenderPage("_splash.cshtml")
+    </div>
+
+
+    <footer class="container">
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>Copyright &copy; @DateTime.Now.Year <a href="#">Simon Šauperl</a></p>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render(
+        "~/bundles/libs"
+        )
+    <script src="/App/durandal/amd/require.js" 
+            data-main="App/main"></script>
+</body>
+</html>
+
+

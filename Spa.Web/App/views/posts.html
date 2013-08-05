@@ -1,0 +1,12 @@
+﻿<section>
+    <h3 data-bind="text: title"></h3>
+    <button data-bind="click: addPost">Add a post</button>
+    <section class="view-list" data-bind="foreach: posts">
+        <article>
+            <span data-bind="text: Title"></span>
+            <div data-bind="html: ContentText"></div>
+            <a href="#" class="tag-edit">Edit</a> 
+            <a href="#" class="tag-delete">Delete</a>
+        </article>
+    </section>
+</section>
