@@ -1,5 +1,5 @@
-﻿define(['durandal/system', 'services/logger'],
-    function (system, logger) {
+﻿define(['durandal/system', 'services/logger', 'services/model'],
+    function (system, logger, model) {
         var getPostsPartials = function (postObservable) {
             postObservable([]);
             var options = {
@@ -11,10 +11,12 @@
             return $.ajax(options).then(querySucceeded).fail(queryFailed);
 
             function querySucceeded(data) {
-                var posts = data;
+                var mapping = {
+                    'ignore': ["Blog", "Comments"]
+                }
 
-                postObservable(posts);
-                log('Retrieved [Posts Partials] from remote data source', posts, true);
+                ko.mapping.fromJS(data, mapping, postObservable);
+                log('Retrieved [Posts Partials] from remote data source', data, true);
             }
         };
 

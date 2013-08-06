@@ -11,6 +11,8 @@ namespace Spa.Web
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
             "~/Scripts/jquery-{version}.js"
             , "~/Scripts/knockout-{version}.js"
+            , "~/Scripts/knockout.mapping-latest.js"
+            , "~/Scripts/knockout.validation.js"
             , "~/Scripts/sammy-{version}.js"
             , "~/Scripts/amplify.js"
             , "~/Scripts/bootstrap.js"
