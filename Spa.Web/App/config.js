@@ -13,6 +13,16 @@
         moduleId: 'viewmodels/flickr',
         name: 'Flickr',
         visible: true
+    }, {
+        url: 'postadd',
+        moduleId: 'viewmodels/postadd',
+        name: 'Add Post',
+        visible: true
+    }, {
+        url: 'postdetail/:id',
+        moduleId: 'viewmodels/postdetail',
+        name: 'Edit false',
+        visible: false
     }];
 
     var startModule = 'posts';

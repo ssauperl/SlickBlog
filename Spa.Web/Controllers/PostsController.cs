@@ -22,7 +22,7 @@ namespace Spa.Web.Controllers
         public Post Get(string id)
         {
 
-            var post = RavenSession.Load<Post>(id);
+            var post = RavenSession.Load<Post>("posts/"+id);
             return post;
 
         }
@@ -37,7 +37,7 @@ namespace Spa.Web.Controllers
         public void Put(string id, [FromBody]Post updatedPost)
         {
             //TODO
-            var post = RavenSession.Load<Post>(id);
+            var post = RavenSession.Load<Post>("posts/" + id);
             post.Title = updatedPost.Title;
             post.ContentText = updatedPost.ContentText;
 
@@ -46,7 +46,7 @@ namespace Spa.Web.Controllers
         // DELETE api/<controller>/5
         public void Delete(string id)
         {
-            var post = RavenSession.Load<Post>(id);
+            var post = RavenSession.Load<Post>("posts/" + id);
             RavenSession.Delete(post);
         }
     }

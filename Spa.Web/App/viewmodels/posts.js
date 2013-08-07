@@ -1,61 +1,44 @@
-﻿define(['services/dataservice'], function (dataservice) {
-    var posts = ko.observableArray(),
-        initalized = false,
-        postToAdd = ko.observable(null),
-        selectedPost = ko.observable(null),
-        addPost =  function () {
-            //this.tags.push({ Name: this.tagToAdd() });
-            var newPost = {title: 'new', contentText: 'newContent'};
-            //this.postToAdd(newPost);
-            this.posts.push(newPost);
-
-            //ajaxAdd("/tags", ko.toJSON(newTag), function (data) {
-            //    viewModel.tags.push(new ko.protectedObservableItem(data));
-            //});
-        },
-        removePost = function (post) {
-            vm.posts.remove(post)
-        },
-        editPost = function () {
-
-            //var postTemplate = [{ Title : ko.observable(post.Title)},
-            //    {CoontentText : ko.observable(post.ContentText)}];
-            //var postTemplate = [{ Title : 'asd'},
-            //    {CoontentText : 'wefwef'}];
-            //vm.selectedPost = this;
-            vm.selectedPost(this);
-            //this(vm.selectedPost);
-        },
-        postItem = function (title, contentText) {
-            console.log('does it work');
-            return {
-                title: ko.observable(title),
-                contentText: ko.observable(contentText)
-            }
-        },
-        vm = {
-            activate: activate,
-            posts: posts,
-            title: 'Posts',
-            addPost: addPost,
-            removePost: removePost,
-            selectedPost: selectedPost,
-            editPost: editPost
-            //refresh: refresh
-        };
+﻿define(['services/dataservice', 'durandal/plugins/router'],
+    function (dataservice, router) {
+        var posts = ko.observableArray(),
+            initalized = false,
+            selectedPost = ko.observable(null),
+            postItem = function (title, contentText) {
+                return {
+                    title: ko.observable(title),
+                    contentText: ko.observable(contentText)
+                }
+            },
+            selectPost = function () {
+                vm.selectedPost(this);
+                toastr.info('Post selected');
+            },
+             gotoDetails = function(post) {
+                 if (post && post.Id()) {
+                    var url = '#/postdetail/' + post.Id();
+                    router.navigateTo(url);
+                }
+            },
+            vm = {
+                activate: activate,
+                posts: posts,
+                title: 'Posts',
+                selectedPost: selectedPost,
+                selectPost: selectPost,
+                gotoDetails: gotoDetails,
+                refresh: refresh
+            };
     
 
-    function activate() {
-        //if (initialized) { return; }
-        //initialized = true;
-        return refresh();
-    };
+        function activate() {
+            //if (vm.initialized) { return; }
+            //vm.initialized = true;
+            return refresh();
+        };
 
-    function refresh() {
-        return dataservice.getPostsPartials(posts);
-    };
+        function refresh() {
+            return dataservice.getPosts(posts);
+        };
 
-
-
-    return vm;
-});
+        return vm;
+    });

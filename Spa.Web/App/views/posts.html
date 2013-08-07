@@ -1,24 +1,17 @@
 ﻿<section>
     <h3 data-bind="text: title"></h3>
-    <button data-bind="click: addPost">Add a post</button>
     <section class="view-list" data-bind="foreach: posts">
         <article>
-            <span data-bind="text: Id"></span>
-            <span data-bind="text: Title"></span>
-            <div data-bind="html: ContentText"></div>
-            <button data-bind="click: $root.editPost">Edit</button>
-            <button data-bind="click: $root.removePost">Remove</button>
+            <h1>
+                <span data-bind="text: Id"></span>
+                <span data-bind="text: Title"></span>
+            </h1>
             <div data-bind="foreach: Tags">
                 <span data-bind="text: Name"></span>
             </div>
+            <div data-bind="text: ContentText"></div>
+            <button data-bind="click: $root.gotoDetails">Details</button>
+
         </article>
     </section>
-
-    <div id="postDialog" data-bind="with: selectedPost">
-        <input type="text" data-bind="value: Title" />
-        <input type="textarea" data-bind="value: ContentText" />
-        <div data-bind="foreach: Tags">
-            <input type="text" data-bind="value: Name"></input>
-        </div>
-    </div>
 </section>

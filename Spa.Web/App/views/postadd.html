@@ -1,0 +1,13 @@
+﻿<section>
+    <h3 data-bind="text: title"></h3>
+        <div class="button-bar">
+        <button class="btn btn-info" data-bind="click: cancel, enable: canSave">Cancel</button>
+        <button class="btn btn-info" data-bind="click: save, enable: canSave">Save</button>
+    </div>
+    <section class="view-list" data-bind="with: post">
+        <article>
+            <input type="text" data-bind="value: Title"/>
+            <input type="text" data-bind="value: ContentText"/>
+        </article>
+    </section>
+</section>

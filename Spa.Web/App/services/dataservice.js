@@ -1,7 +1,7 @@
-﻿define(['durandal/system', 'services/logger', 'services/model'],
-    function (system, logger, model) {
-        var getPostsPartials = function (postObservable) {
-            postObservable([]);
+﻿define(['durandal/system', 'services/logger'],
+    function (system, logger) {
+        var getPosts = function (postsObservable) {
+            postsObservable([]);
             var options = {
                 url: '/api/posts',
                 type: 'GET',
@@ -15,13 +15,84 @@
                     'ignore': ["Blog", "Comments"]
                 }
 
-                ko.mapping.fromJS(data, mapping, postObservable);
-                log('Retrieved [Posts Partials] from remote data source', data, true);
+                ko.mapping.fromJS(data, mapping, postsObservable);
+                log('Retrieved Posts from remote data source', data, true);
+            }
+        };
+
+        var getPostById = function (id, postObservable) {
+            //postObservable();
+            var options = {
+                url: '/api/posts/' + id,
+                type: 'GET',
+                dataType: 'json'
+            };
+
+            return $.ajax(options).then(querySucceeded).fail(queryFailed);
+
+            function querySucceeded(data) {
+                var mapping = {
+                    'ignore': ["Blog", "Comments"]
+                }
+
+                postObservable(ko.mapping.fromJS(data, mapping));
+                log('Retrieved Post from remote data source', data, true);
+            }
+        };
+
+
+        var savePost = function (postObservable) {
+            var options = {
+                url: '/api/posts/',
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: ko.toJSON(postObservable)
+            };
+
+            return $.ajax(options).then(querySucceeded).fail(queryFailed);
+
+            function querySucceeded(data) {
+                log('Post saved to remote data source', data, true);
+            }
+        };
+
+        var updatePost = function (id, postObservable) {
+            var options = {
+                url: '/api/posts/' + id,
+                type: 'PUT',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: ko.toJSON(postObservable)
+            };
+
+            return $.ajax(options).then(querySucceeded).fail(queryFailed);
+
+            function querySucceeded(data) {
+                log('Post updated on remote data source', data, true);
+            }
+        };
+
+        var deletePost = function (id) {
+            var options = {
+                url: '/api/posts/' + id,
+                type: 'DELETE',
+                dataType: 'json'
+            };
+
+            return $.ajax(options).then(querySucceeded).fail(queryFailed);
+
+            function querySucceeded(data) {
+                log('Post deleted from remote data source', data, true);
             }
         };
 
         var dataservice = {
-            getPostsPartials: getPostsPartials
+            getPosts: getPosts,
+            savePost: savePost,
+            getPostById: getPostById,
+            updatePost: updatePost,
+            deletePost: deletePost
         };
 
         return dataservice;
