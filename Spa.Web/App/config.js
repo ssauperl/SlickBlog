@@ -1,6 +1,10 @@
 ﻿define(function () {
     toastr.options.timeOut = 4000;
     toastr.options.positionClass = 'toast-top-right';
+    ko.validation.configure({
+        decorateElement: true,
+        errorElementClass: 'has-error'
+    });
 
 
     var routes = [{

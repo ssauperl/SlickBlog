@@ -16,6 +16,7 @@ namespace Spa.Web
             , "~/Scripts/sammy-{version}.js"
             , "~/Scripts/amplify.js"
             , "~/Scripts/bootstrap.js"
+            , "~/Scripts/tooltip.js"
             , "~/Scripts/toastr.js"
             ));
             
