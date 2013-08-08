@@ -1,19 +1,9 @@
 ﻿define(['durandal/app', 'services/dataservice', 'durandal/plugins/router'],
     function (app, dataservice, router) {
         var isSaving = ko.observable(false),
+            
             //post props
-            //Id = ko.observable(),
-            //Title = ko.observable().extend({ required: true }),
-            //ContentText = ko.observable().extend({ required: true }),
-            //Tags = ko.observableArray(),
-
             post = ko.observable();
-            //{
-            //    Id: Id,
-            //    Title: Title,
-            //    ContentText: ContentText,
-            //    Tags: Tags
-            //},
 
             postItem = function () {
                 return{
@@ -26,35 +16,39 @@
 
             //tag props
             validateTag = ko.observable();
-
-            tagName = ko.observable().extend({
-                required: {
-                    message: "Tag name is required",
-                    onlyIf: function () { return (validateTag() === true); }
-                }
-            }),
+            
+            tag = {
+                Name: ko.observable('').extend({
+                    required: {
+                        message: "Tag name is required",
+                        onlyIf: function () { return (validateTag() === true); }
+                    }
+                })
+             },
 
             tagItem = function (name) {
-                return { Name: ko.observable(name) }
+                return {
+                    Name: ko.observable(name)
+                }
             },
 
             activate = function () {
                 //reset values
                 post(new postItem());
                 validateTag(false);
-                tagName('');
+                //tagName('');
             },
 
             addTag = function () {
                 validateTag(true);
-                var result = ko.validation.group(tagName());
+                var result = ko.validation.group(tag);
 
                 if (result().length > 0)
                     result.showAllMessages();
                 else {
-                    post().Tags.push(new tagItem(tagName()));
+                    post().Tags.push(new tagItem(tag.Name()));
                     validateTag(false);
-                    tagName('');
+                    tag.Name('');
                 }
                     
             },
@@ -109,7 +103,7 @@
                 addTag: addTag,
                 title: 'Add a New Post',
                 post: post,
-                tagName: tagName
+                tag: tag
             };
 
         return vm;

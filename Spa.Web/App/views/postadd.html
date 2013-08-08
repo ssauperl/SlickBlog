@@ -18,7 +18,7 @@
             <label for="inputTag" class="control-label">Add a Tag</label>
             <div class="row">
                 <div class="col-lg-2">
-                    <input type="text" id="inputTag" class="form-control" data-bind="value: $parent.tagName, valueUpdate: 'afterkeydown'" />
+                    <input type="text" id="inputTag" class="form-control" data-bind="value: $parent.tag.Name, valueUpdate: 'afterkeydown', executeOnEnter: $parent.addTag" />
                 </div>
                 <div class="col-lg-2">
                     <button class="btn btn-info" data-bind="click: $parent.addTag">Add tag</button>
