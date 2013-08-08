@@ -1,6 +1,6 @@
 ﻿define(function () {
     toastr.options.timeOut = 4000;
-    toastr.options.positionClass = 'top-bottom-right';
+    toastr.options.positionClass = 'toast-top-right';
 
 
     var routes = [{

@@ -53,11 +53,14 @@
             return $.ajax(options).then(querySucceeded).fail(queryFailed);
 
             function querySucceeded(data) {
+                //setting post.Id so we know where to redirect the user
+                postObservable().Id(data);
                 log('Post saved to remote data source', data, true);
             }
         };
 
         var updatePost = function (id, postObservable) {
+            //todo check
             var options = {
                 url: '/api/posts/' + id,
                 type: 'PUT',

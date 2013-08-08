@@ -1,17 +1,12 @@
-﻿<section>
-    <h3 data-bind="text: title"></h3>
-    <section class="view-list" data-bind="foreach: posts">
-        <article>
-            <h1>
-                <span data-bind="text: Id"></span>
-                <span data-bind="text: Title"></span>
-            </h1>
-            <div data-bind="foreach: Tags">
-                <span data-bind="text: Name"></span>
-            </div>
-            <div data-bind="text: ContentText"></div>
-            <button data-bind="click: $root.gotoDetails">Details</button>
-
-        </article>
-    </section>
+﻿
+<section class="posts" data-bind="foreach: posts">
+    <article class="post">
+        <h1 class="post-title">
+            <a data-bind="text: Title, click: $root.gotoDetails"></a>
+        </h1>
+        <div class="post-tags" data-bind="foreach: Tags">
+            <span class="badge" data-bind="text: Name"></span>
+        </div>
+        <div class="post-content" data-bind="text: ContentText"></div>
+    </article>
 </section>

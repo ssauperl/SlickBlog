@@ -59,7 +59,7 @@
                     dataservice.deletePost(vm.post().Id()).then(success).fail(failed);
 
                     function success() {
-                        router.navigateTo('#/posts');
+                        router.replaceLocation('#/posts');
                     }
 
                     function failed(error) {

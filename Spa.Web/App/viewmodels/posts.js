@@ -10,10 +10,12 @@
                 }
             },
             selectPost = function () {
+                //todo bind this with jquery on event
                 vm.selectedPost(this);
                 toastr.info('Post selected');
             },
-             gotoDetails = function(post) {
+             gotoDetails = function (post) {
+                 //todo bind this with jquery on event
                  if (post && post.Id()) {
                     var url = '#/postdetail/' + post.Id();
                     router.navigateTo(url);
