@@ -1,7 +1,15 @@
 ﻿<section class="post-detail">
    <h3 data-bind="text: title"></h3>
-   <div data-bind="compose: { model: 'viewmodels/postedit' }">Loading...</div> 
+   <article data-bind="with: post">
+       <h1 data-bind="text: Title"></h1>
+       <ul data-bind="foreach: Tags">
+           <li data-bind="text: $data"></li>
+       </ul>
+       <div data-bind="html: ContentText"></div>
+   </article>
+   <button class="btn btn-default" data-bind="click: select">Edit post</button>
 </section>
+
 <section class="post-comments">
 
 <div class="form-group" data-bind="validationElement: Content">

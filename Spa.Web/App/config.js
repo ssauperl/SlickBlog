@@ -23,6 +23,11 @@
         name: 'Add Post',
         visible: true
     }, {
+        url: 'postedit/:id',
+        moduleId: 'viewmodels/postedit',
+        name: 'edit post',
+        visible: false
+    }, {
         url: 'postdetail/:id',
         moduleId: 'viewmodels/postdetail',
         name: 'Edit false',

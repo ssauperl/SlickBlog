@@ -5,7 +5,7 @@
             <a data-bind="text: Title, click: $root.gotoDetails"></a>
         </h1>
         <div class="post-tags" data-bind="foreach: Tags">
-            <span class="badge" data-bind="text: Name"></span>
+            <span class="badge" data-bind="text: $data"></span>
         </div>
         <div class="post-content" data-bind="text: ContentText"></div>
     </article>

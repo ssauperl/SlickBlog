@@ -2,21 +2,26 @@
         'durandal/plugins/router',
         'durandal/system',
         'durandal/app',
-        'services/logger',
-        'viewmodels/postedit'],
-    function (dataservice, router, system, app, logger, postedit) {
+        'services/logger'],
+    function (dataservice, router, system, app, logger) {
         var
-            post = postedit.post,
+            post = ko.observableArray(),
             activate = function (routeData) {
                 var id = parseInt(routeData.id);
-                return dataservice.getPostById(id, post);
-
-            };
+                dataservice.getPostById(id, post);
+            };      
+        var select = function () {
+            if (post() && post().Id()) {
+                var url = '#/postedit/' + post().Id();
+                router.navigateTo(url);
+            }
+        };
 
         var vm = {
             activate: activate,
             //goBack: goBack,
             post: post,
+            select: select,
             title: 'Post Details'
         };
         return vm;

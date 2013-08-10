@@ -214,6 +214,8 @@
     <None Include="Content\durandal.less" />
     <Content Include="App\viewmodels\tagsedit.js" />
     <Content Include="App\views\tagsedit.html" />
+    <Content Include="App\widgets\expander\controller.js" />
+    <Content Include="App\widgets\expander\view.html" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />

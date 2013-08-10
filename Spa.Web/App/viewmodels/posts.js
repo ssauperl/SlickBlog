@@ -3,12 +3,7 @@
         var posts = ko.observableArray(),
             initalized = false,
             selectedPost = ko.observable(null),
-            postItem = function (title, contentText) {
-                return {
-                    title: ko.observable(title),
-                    contentText: ko.observable(contentText)
-                }
-            },
+
             selectPost = function () {
                 //todo bind this with jquery on event
                 vm.selectedPost(this);
@@ -34,11 +29,6 @@
     
 
         function activate() {
-            //if (vm.initialized) { return; }
-            //postadd.activate();
-            //vm.initialized = true;
-            //toastr.info(postadd.title);
-            //console.log(postadd);
             return refresh();
         };
 

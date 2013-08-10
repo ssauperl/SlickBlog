@@ -26,7 +26,7 @@ define(['durandal/app', 'durandal/viewLocator', 'durandal/system', 'durandal/plu
 
             //Show the app by setting the root view model for our application with a transition.
             app.setRoot('viewmodels/shell', 'entrance');
-
+            app.adaptToDevice();
             // override bad route behavior to write to 
             // console log and show error toast
             router.handleInvalidRoute = function (route, params) {

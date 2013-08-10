@@ -36,12 +36,17 @@
             tagsedit.initTags();
         },
 
-        activate = function () {
-            initPost();
-            //var id = 355;
-            //dataservice.getPostById(id, post).then(function () {
-            //    tagsedit.tags(post.Tags());
-            //}); 
+        activate = function (routeData) {
+            if (routeData.id) {
+                var id = parseInt(routeData.id);
+                dataservice.getPostById(id, post).then(function () {
+                    tagsedit.tags(post.Tags());
+                    resetPost();
+                });
+            }
+            else {
+                initPost();
+            }
             
         },
 
@@ -70,11 +75,12 @@
             }
                     
             function goToEditView(result) {
-                resetPost();
-                router.replaceLocation('#/postdetail/' + post.Id());
+                
+                //router.replaceLocation('#/postedit/' + post.Id());
             }
 
             function complete() {
+                resetPost();
                 isSaving(false);
             }
         };
