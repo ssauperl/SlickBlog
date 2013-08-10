@@ -1,44 +1,10 @@
 ﻿<section class="post-detail">
-    <h3 data-bind="text: title"></h3>
-    <form class="view-list" data-bind="with: post">
-        <div class="form-group" data-bind="validationElement: Title">
-            <label for="postTitle" class="control-label">Title</label>
-            <div class="control">
-                <input type="text" id="postTitle" class="form-control" data-bind="value: Title, valueUpdate: 'afterkeydown'" />
-            </div>
-        </div>
-        <div class="form-group" data-bind="validationElement: ContentText">
-            <label for="postContent" class="control-label">Content</label>
-            <div class="control">
-                <textarea id="postContent" class="form-control" rows="3" data-bind="value: ContentText, valueUpdate: 'afterkeydown'"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputTag" class="control-label">Add a Tag</label>
-            <div class="row">
-                <div class="col-lg-2">
-                    <input type="text" id="inputTag" class="form-control" data-bind="value: $parent.tag.Name, valueUpdate: 'afterkeydown', executeOnEnter: $parent.addTag" />
-                </div>
-                <div class="col-lg-2">
-                    <button class="btn btn-info" data-bind="click: $parent.addTag">Add tag</button>
-                </div>
-                <div class="post-tags col-lg-12" data-bind="foreach: Tags">
-                    <span class="badge" data-bind="text: Name"></span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="control">
-                <button class="btn btn-info" data-bind="click: $parent.cancel, enable: $parent.canSave">Cancel</button>
-                <button class="btn btn-info" data-bind="click: $parent.save, enable: $parent.canSave">Save</button>
-                <button class="btn btn-danger" data-bind="click: $parent.deletePost">Delete</button>
-            </div>
-        </div>
-
-    </form>
+   <h3 data-bind="text: title"></h3>
+   <div data-bind="compose: { model: 'viewmodels/postedit' }">Loading...</div> 
 </section>
 <section class="post-comments">
-<div class="form-group" data-bind="validationElement: ContentText">
+
+<div class="form-group" data-bind="validationElement: Content">
             <label for="postContent" class="control-label">Content</label>
             <div class="control">
                 <textarea id="commentContent" class="form-control" rows="3" data-bind="value: Content, valueUpdate: 'afterkeydown'"></textarea>

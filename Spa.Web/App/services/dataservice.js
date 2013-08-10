@@ -35,7 +35,7 @@
                     'ignore': ["Blog", "Comments"]
                 }
 
-                postObservable(ko.mapping.fromJS(data, mapping));
+                ko.mapping.fromJS(data, mapping, postObservable);
                 log('Retrieved Post from remote data source', data, true);
             }
         };

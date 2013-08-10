@@ -13,88 +13,138 @@
                     return false
             });
 
-            post = {
-                Id: Id,
-                Title: Title,
-                ContentText: ContentText,
-                Tags: Tags,
-                isModified: isModified
-            },
+        post = {
+            Id: Id,
+            Title: Title,
+            ContentText: ContentText,
+            Tags: Tags,
+            isModified: isModified
+        },
 
-            resetPost = function () {
-                Title.isModified(false);
-                ContentText.isModified(false);
-            },
+        resetPost = function () {
+            Title.isModified(false);
+            ContentText.isModified(false);
+        },
 
-            initPost = function () {
-                Id('');
-                Title('');
-                ContentText('');
-                Tags([]);
+        initPost = function () {
+            Id('');
+            Title('');
+            ContentText('');
+            Tags([]);
 
-                resetPost();
-                tagsedit.initTags();
-            },
+            resetPost();
+            tagsedit.initTags();
+        },
 
-            activate = function () {
-                initPost();
-            },
-
-            cancel = function () {
-                router.navigateBack();
-            },
+        activate = function () {
+            initPost();
+            //var id = 355;
+            //dataservice.getPostById(id, post).then(function () {
+            //    tagsedit.tags(post.Tags());
+            //}); 
             
-            isSaving = ko.observable(false),
+        },
 
-            canSave = ko.computed(function () {
-                return !isSaving();
-            }),
+        cancel = function () {
+            router.navigateBack();
+        },
 
-            save = function () {
-                isSaving(true);
-                if (post.isValid()) {
-                    post.Tags.push(tagsedit.tags());
-                    dataservice.savePost(post).then(goToEditView).then(complete);
+        isSaving = ko.observable(false),
+        canSave = ko.computed(function () {
+            return !isSaving();
+        }),
+        save = function () {
+            isSaving(true);
+            if (post.isValid()) {
+                post.Tags(tagsedit.tags());
+                if (post.Id()) {
+                    dataservice.updatePost(post.Id(), post).then(complete);
                 }
                 else {
-                    post.errors.showAllMessages();
-                    complete();                  
+                    dataservice.savePost(post).then(goToEditView).then(complete);
                 }
+            }
+            else {
+                post.errors.showAllMessages();
+                complete();                  
+            }
                     
-                function goToEditView(result) {
-                    resetPost();
-                    router.replaceLocation('#/postdetail/' + post.Id());
-                }
+            function goToEditView(result) {
+                resetPost();
+                router.replaceLocation('#/postdetail/' + post.Id());
+            }
 
-                function complete() {
-                    isSaving(false);
+            function complete() {
+                isSaving(false);
+            }
+        };
+
+        var editMode = ko.computed(function () {
+            if (post.Id())
+                return true;
+            else
+                return false;
+        });
+        var isDeleting = ko.observable(false);
+        var deletePost = function () {
+            var msg = 'Delete post "' + post.Title() + '" ?';
+            var title = 'Confirm Delete';
+            isDeleting(true);
+            return app.showMessage(msg, title, ['Yes', 'No'])
+                .then(confirmDelete);
+
+            function confirmDelete(selectedOption) {
+                if (selectedOption === 'Yes') {
+                    dataservice.deletePost(post.Id()).then(success).fail(failed);
+
+                    function success() {
+                        resetPost();
+                        router.replaceLocation('#/posts');
+                    }
+
+                    function failed(error) {
+                        cancel();
+                        var errorMsg = 'Error: ' + error.message;
+                        logger.logError(
+                            errorMsg, error, system.getModuleId(vm), true);
+                    }
+
+                    function finish() {
+                        return selectedOption;
+                    }
                 }
-            };
+                isDeleting(false);
+            }
+
+        };
    
-            canDeactivate = function () {
-                if (post.isModified()) {
-                    var msg = 'Do you want to leave and cancel?';
-                    return app.showMessage(msg, 'Navigate Away', ['Yes', 'No'])
-                        .then(function (selectedOption) {
-                            return selectedOption;
-                        });
-                }
-                else
-                    return true;
-            };
+        canDeactivate = function () {
+            if (post.isModified()) {
+                var msg = 'Do you want to leave and cancel?';
+                return app.showMessage(msg, 'Navigate Away', ['Yes', 'No'])
+                    .then(function (selectedOption) {
+                        return selectedOption;
+                    });
+            }
+            else
+                return true;
+        };
 
-            var vm = {
-                activate: activate,
-                canDeactivate: canDeactivate,
-                canSave: canSave,
-                cancel: cancel,
-                save: save,
-                title: 'Add a New Post',
-                post: post,
-                tagsedit: tagsedit
-            };
+        var vm = {
+            activate: activate,
+            canDeactivate: canDeactivate,
+            canSave: canSave,
+            isDeleting: isDeleting,
+            editMode: editMode,
+            cancel: cancel,
+            save: save,
+            deletePost: deletePost,
+            title: '',
+            post: post,
+            tagsedit: tagsedit
+        };
             
-            ko.validation.group(post, { deep: true });
+        ko.validation.group(post, { deep: true });
 
         return vm;
     });

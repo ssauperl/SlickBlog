@@ -18,6 +18,7 @@
             <div class="control">
                 <button class="btn btn-info" data-bind="click: $parent.cancel, enable: $parent.canSave">Cancel</button>
                 <button class="btn btn-default" data-bind="click: $parent.save, enable: $parent.canSave">Save</button>
+                <button class="btn btn-danger" data-bind="click: $parent.deletePost, visible: $parent.editMode">Delete</button>
             </div>
         </div>
 
