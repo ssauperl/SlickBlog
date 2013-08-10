@@ -2,52 +2,31 @@
         'durandal/plugins/router',
         'durandal/system',
         'durandal/app',
-        'services/logger'],
-    function (dataservice, router, system, app, logger) {
-        var post = ko.observable();
-        var isSaving = ko.observable(false);
-        var isDeleting = ko.observable(false);
-        //var postItem = function () {
-        //    return {
-        //        Id: ko.observable(),
-        //        Title: ko.observable(),
-        //        ContentText: ko.observable(),
-        //        Tags: ko.observableArray()
-        //    }
-        //};
+        'services/logger',
+        'viewmodels/postedit'],
+    function (dataservice, router, system, app, logger, postedit) {
+       var
 
-        var activate = function (routeData) {
-            //post(new postItem());
+        activate = function (routeData) {
             var id = parseInt(routeData.id);
            
             return dataservice.getPostById(id, post);
-            //return true;
-        };
+        },
 
-        //var goBack = function () {
-        //    //router.navigateBack();
-        //};
-
-
-        var cancel = function () {
-
-            toastr.info('Delete failed');
-        };
-
-        var canSave = ko.computed(function () {
+        canSave = ko.computed(function () {
             return!isSaving();
-        });
+        }),
 
-        var save = function () {
+        save = function () {
             isSaving(true);
-            return dataservice.updatePost(ko.toJSON(vm.post().Id()) , vm.post).then(complete);
+            return dataservice.updatePost(ko.toJSON(vm.post().Id()) , post).then(complete);
 
             function complete() {
                 isSaving(false);
             }
-        };
+        },
 
-        var deletePost = function () {
+        deletePost = function () {
             var msg = 'Delete post "' + vm.post().Title() + '" ?';
             var title = 'Confirm Delete';
             isDeleting(true);
@@ -106,7 +85,9 @@
             //goBack: goBack,
             save: save,
             post: post,
-            title: 'Post Details'
+            title: 'Post Details',
+            addTag: addTag,
+            tag: tag
         };
         return vm;
     });

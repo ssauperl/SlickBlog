@@ -24,6 +24,7 @@ namespace Spa.Web
             // Custom LESS files
             var lessBundle = new Bundle("~/Content/Less").Include(
             "~/Content/less/bootstrap.less"
+            , "~/Content/fontawesome/font-awesome.less"
             , "~/Content/toastr.less"
             , "~/Content/durandal.less"
             );

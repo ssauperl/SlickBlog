@@ -19,13 +19,18 @@
         visible: true
     }, {
         url: 'postadd',
-        moduleId: 'viewmodels/postadd',
+        moduleId: 'viewmodels/postedit',
         name: 'Add Post',
         visible: true
     }, {
         url: 'postdetail/:id',
         moduleId: 'viewmodels/postdetail',
         name: 'Edit false',
+        visible: false
+    }, {
+        url: 'tagsedit',
+        moduleId: 'viewmodels/tagsedit',
+        name: 'Edit tags',
         visible: false
     }];
 

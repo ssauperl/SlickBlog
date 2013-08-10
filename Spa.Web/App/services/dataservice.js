@@ -54,7 +54,7 @@
 
             function querySucceeded(data) {
                 //setting post.Id so we know where to redirect the user
-                postObservable().Id(data);
+                postObservable.Id(data);
                 log('Post saved to remote data source', data, true);
             }
         };

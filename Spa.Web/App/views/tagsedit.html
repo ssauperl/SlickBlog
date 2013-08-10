@@ -1,0 +1,14 @@
+﻿<div class="form-group">
+    <label for="inputTag" class="control-label">Add a Tag</label>
+    <div class="row">
+        <div class="col-lg-2">
+            <input type="text" id="inputTag" class="form-control" data-bind="value: tag, valueUpdate: 'afterkeydown', executeOnEnter: addTag" />
+        </div>
+        <div class="col-lg-2">
+            <button class="btn btn-info" data-bind="click: addTag">Add tag</button>
+        </div>
+        <div class="post-tags col-lg-12" data-bind="foreach: tags">
+            <span class="badge" data-bind="text: $parent.tags()[$index()]"></span>
+        </div>
+    </div>
+</div>

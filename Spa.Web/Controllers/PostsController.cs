@@ -41,6 +41,7 @@ namespace Spa.Web.Controllers
             var post = RavenSession.Load<Post>(FormatId(id));
             post.Title = updatedPost.Title;
             post.ContentText = updatedPost.ContentText;
+            post.Tags = updatedPost.Tags;
 
         }
 

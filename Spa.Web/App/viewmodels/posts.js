@@ -28,13 +28,17 @@
                 selectedPost: selectedPost,
                 selectPost: selectPost,
                 gotoDetails: gotoDetails,
-                refresh: refresh
+                refresh: refresh,
+                //postadd: postadd
             };
     
 
         function activate() {
             //if (vm.initialized) { return; }
+            //postadd.activate();
             //vm.initialized = true;
+            //toastr.info(postadd.title);
+            //console.log(postadd);
             return refresh();
         };
 

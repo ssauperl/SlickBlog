@@ -11,7 +11,7 @@ namespace SlickBlog.Model
         public Blog Blog { get; set; }
         public string Title { get; set; }
         public string ContentText { get; set; }
-        public Tag[] Tags { get; set; }
+        public string[] Tags { get; set; }
         public Comment[] Comments { get; set; }
     }
 }
