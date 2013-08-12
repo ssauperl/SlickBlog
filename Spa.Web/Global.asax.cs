@@ -38,6 +38,7 @@ namespace Spa.Web
             {
                 ConnectionStringName = "RavenDB"
             }.Initialize();
+            DocumentStore.Conventions.IdentityPartsSeparator = "-";
         }
     }
 }

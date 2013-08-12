@@ -16,12 +16,16 @@ namespace Spa.Web.Controllers
     {
        
         public IDocumentSession RavenSession { get; set; }
+        public IDocumentStore DocumentStore { get; set; }
 
         protected override void Initialize(System.Web.Http.Controllers.HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
+            if (DocumentStore == null)
+                DocumentStore = MvcApplication.DocumentStore;
+
             if (RavenSession == null)
-                RavenSession = MvcApplication.DocumentStore.OpenSession();
+                RavenSession = DocumentStore.OpenSession();
         }
 
         protected override void Dispose(bool disposing)

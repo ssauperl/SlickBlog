@@ -1,40 +1,43 @@
 ﻿define(function () {
-    var
-        tag = ko.observable().extend({ required: true }),
-        tags = ko.observableArray(),
+    //properties
+    var tag = ko.observable().extend({ required: true }),
+        tags = ko.observableArray();
 
 
-        addTag = function () {
-            if (tag.isValid()) {
-                tags.push(tag());
-                resetTag();
-            }
-            else {
-                vm.errors.showAllMessages();
-            }
-        },
-        
-        resetTag = function () {
-            tag('');
-            tag.isModified(false);
-        },
+    //durandal methods
+    var activate = function () {
+        initTags();
+    };
 
-        initTags = function(){
+    //local methods
+    var addTag = function () {
+        if (tag.isValid()) {
+            tags.push(tag());
             resetTag();
-            tags([]);
-        },
+        }
+        else {
+            vm.errors.showAllMessages();
+        }
+    };
 
-        activate = function () {
-            initTags();
-        },
+    var resetTag = function () {
+        tag('');
+        tag.isModified(false);
+    };
 
-        vm = {
-            tag: tag,
-            tags: tags,
-            addTag: addTag,
-            initTags: initTags
+    var initTags = function () {
+        resetTag();
+        tags([]);
+    };
 
-        };
+
+    var vm = {
+        tag: tag,
+        tags: tags,
+        addTag: addTag,
+        initTags: initTags
+
+    };
 
     ko.validation.group(vm);
 

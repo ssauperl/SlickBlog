@@ -162,11 +162,13 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\LessTransform.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\RavenDbController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DocumentPrefixHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,11 +201,14 @@
     <Content Include="App\services\ajax-util.js" />
     <Content Include="App\services\dataservice.js" />
     <Content Include="App\services\logger.js" />
+    <Content Include="App\viewmodels\commentedit.js" />
     <Content Include="App\viewmodels\flickr.js" />
+    <Content Include="App\viewmodels\post.js" />
     <Content Include="App\viewmodels\postedit.js" />
     <Content Include="App\viewmodels\postdetail.js" />
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\viewmodels\posts.js" />
+    <Content Include="App\views\commentedit.html" />
     <Content Include="App\views\postdetail.html" />
     <Content Include="App\views\detail.html" />
     <Content Include="App\views\flickr.html" />
@@ -214,8 +219,8 @@
     <None Include="Content\durandal.less" />
     <Content Include="App\viewmodels\tagsedit.js" />
     <Content Include="App\views\tagsedit.html" />
-    <Content Include="App\widgets\expander\controller.js" />
-    <Content Include="App\widgets\expander\view.html" />
+    <Content Include="App\durandal\widgets\expander\controller.js" />
+    <Content Include="App\durandal\widgets\expander\view.html" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
@@ -292,7 +297,9 @@
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\tooltip.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

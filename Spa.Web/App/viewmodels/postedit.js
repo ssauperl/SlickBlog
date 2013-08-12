@@ -1,63 +1,92 @@
 ﻿define(['durandal/app', 'services/dataservice', 'durandal/plugins/router', 'viewmodels/tagsedit'],
     function (app, dataservice, router, tagsedit) {
-        var
-            Id = ko.observable(),
+        //properties
+        var Id = ko.observable(),
             Title = ko.observable().extend({ required: true }),
             ContentText = ko.observable().extend({ required: true }),
-            Tags = ko.observableArray(),
+            Tags = ko.observableArray();
 
-            isModified = ko.computed(function () {
+        //local properties
+        var isModified = ko.computed(function () {
                 if (Title.isModified() || ContentText.isModified())
                     return true
                 else
                     return false
             });
 
-        post = {
-            Id: Id,
-            Title: Title,
-            ContentText: ContentText,
-            Tags: Tags,
-            isModified: isModified
-        },
+        var isSaving = ko.observable(false);
+        var canSave = ko.computed(function () {
+                return !isSaving();
+            });
 
-        resetPost = function () {
-            Title.isModified(false);
-            ContentText.isModified(false);
-        },
+        var editMode = ko.computed(function () {
+            if (Id())
+                return true;
+            else
+                return false;
+        });
 
-        initPost = function () {
-            Id('');
-            Title('');
-            ContentText('');
-            Tags([]);
+        var isDeleting = ko.observable(false);
 
-            resetPost();
-            tagsedit.initTags();
-        },
+        //post vm
+        var post = {
+                Id: Id,
+                Title: Title,
+                ContentText: ContentText,
+                Tags: Tags,
+                isModified: isModified
+        };
 
-        activate = function (routeData) {
-            if (routeData.id) {
-                var id = parseInt(routeData.id);
+        ko.validation.group(post, { deep: true });
+
+        //durandal methods
+        var activate = function (routeData) {
+            var id = routeData.id;
+            if (id) {
                 dataservice.getPostById(id, post).then(function () {
                     tagsedit.tags(post.Tags());
-                    resetPost();
+                    resetModified();
                 });
             }
             else {
                 initPost();
             }
-            
-        },
 
-        cancel = function () {
+        };
+
+        var canDeactivate = function () {
+            if (post.isModified()) {
+                var msg = 'Do you want to leave and cancel?';
+                return app.showMessage(msg, 'Navigate Away', ['Yes', 'No'])
+                    .then(function (selectedOption) {
+                        return selectedOption;
+                    });
+            }
+            else
+                return true;
+        };
+
+        //local methods
+        var resetModified = function () {
+            Title.isModified(false);
+            ContentText.isModified(false);
+        };
+
+        var initPost = function () {
+            Id('');
+            Title('');
+            ContentText('');
+            Tags([]);
+
+            resetModified();
+            tagsedit.initTags();
+        };
+
+        var cancel = function () {
             router.navigateBack();
-        },
+        };
 
-        isSaving = ko.observable(false),
-        canSave = ko.computed(function () {
-            return !isSaving();
-        }),
+
         save = function () {
             isSaving(true);
             if (post.isValid()) {
@@ -80,18 +109,12 @@
             }
 
             function complete() {
-                resetPost();
+                resetModified();
                 isSaving(false);
             }
         };
 
-        var editMode = ko.computed(function () {
-            if (post.Id())
-                return true;
-            else
-                return false;
-        });
-        var isDeleting = ko.observable(false);
+
         var deletePost = function () {
             var msg = 'Delete post "' + post.Title() + '" ?';
             var title = 'Confirm Delete';
@@ -104,7 +127,7 @@
                     dataservice.deletePost(post.Id()).then(success).fail(failed);
 
                     function success() {
-                        resetPost();
+                        resetModified();
                         router.replaceLocation('#/posts');
                     }
 
@@ -124,17 +147,7 @@
 
         };
    
-        canDeactivate = function () {
-            if (post.isModified()) {
-                var msg = 'Do you want to leave and cancel?';
-                return app.showMessage(msg, 'Navigate Away', ['Yes', 'No'])
-                    .then(function (selectedOption) {
-                        return selectedOption;
-                    });
-            }
-            else
-                return true;
-        };
+
 
         var vm = {
             activate: activate,
@@ -150,7 +163,7 @@
             tagsedit: tagsedit
         };
             
-        ko.validation.group(post, { deep: true });
+
 
         return vm;
     });

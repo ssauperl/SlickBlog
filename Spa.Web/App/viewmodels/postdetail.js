@@ -4,15 +4,21 @@
         'durandal/app',
         'services/logger'],
     function (dataservice, router, system, app, logger) {
-        var
-            post = ko.observableArray(),
-            activate = function (routeData) {
-                var id = parseInt(routeData.id);
-                dataservice.getPostById(id, post);
-            };      
+        //properties
+        var post = new Object();
+        var deferred = $.Deferred();
+
+        //durandal methods
+        var activate = function (routeData) {
+                var id = routeData.id;
+                dataservice.getPostById(id, post).always(function () { deferred.resolve(); });;
+                return deferred.promise();
+        };
+
+        //local methods
         var select = function () {
-            if (post() && post().Id()) {
-                var url = '#/postedit/' + post().Id();
+            if (post && post.Id()) {
+                var url = '#/postedit/' + post.Id();
                 router.navigateTo(url);
             }
         };
@@ -24,5 +30,6 @@
             select: select,
             title: 'Post Details'
         };
+
         return vm;
     });

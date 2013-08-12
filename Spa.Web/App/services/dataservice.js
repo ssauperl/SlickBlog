@@ -15,13 +15,12 @@
                     'ignore': ["Blog", "Comments"]
                 }
 
-                ko.mapping.fromJS(data, mapping, postsObservable);
+                ko.mapping.fromJS(data, {}, postsObservable);
                 log('Retrieved Posts from remote data source', data, true);
             }
         };
 
-        var getPostById = function (id, postObservable) {
-            //postObservable();
+        var getPostById = function (id, postVm) {
             var options = {
                 url: '/api/posts/' + id,
                 type: 'GET',
@@ -35,38 +34,38 @@
                     'ignore': ["Blog", "Comments"]
                 }
 
-                ko.mapping.fromJS(data, mapping, postObservable);
+                ko.mapping.fromJS(data, {}, postVm);
                 log('Retrieved Post from remote data source', data, true);
             }
         };
 
 
-        var savePost = function (postObservable) {
+        var savePost = function (postVm) {
             var options = {
                 url: '/api/posts/',
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
-                data: ko.toJSON(postObservable)
+                data: ko.toJSON(postVm)
             };
 
             return $.ajax(options).then(querySucceeded).fail(queryFailed);
 
             function querySucceeded(data) {
                 //setting post.Id so we know where to redirect the user
-                postObservable.Id(data);
+                postVm.Id(data);
                 log('Post saved to remote data source', data, true);
             }
         };
 
-        var updatePost = function (id, postObservable) {
+        var updatePost = function (id, postVm) {
             //todo check
             var options = {
                 url: '/api/posts/' + id,
                 type: 'PUT',
                 dataType: 'json',
                 contentType: 'application/json',
-                data: ko.toJSON(postObservable)
+                data: ko.toJSON(postVm)
             };
 
             return $.ajax(options).then(querySucceeded).fail(queryFailed);

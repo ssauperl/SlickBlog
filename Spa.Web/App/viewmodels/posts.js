@@ -1,40 +1,46 @@
 ﻿define(['services/dataservice', 'durandal/plugins/router'],
     function (dataservice, router) {
-        var posts = ko.observableArray(),
-            initalized = false,
-            selectedPost = ko.observable(null),
+        //properties
+        var posts = ko.observableArray();
 
-            selectPost = function () {
-                //todo bind this with jquery on event
-                vm.selectedPost(this);
-                toastr.info('Post selected');
-            },
-             gotoDetails = function (post) {
-                 //todo bind this with jquery on event
-                 if (post && post.Id()) {
-                    var url = '#/postdetail/' + post.Id();
-                    router.navigateTo(url);
-                }
-            },
-            vm = {
-                activate: activate,
-                posts: posts,
-                title: 'Posts',
-                selectedPost: selectedPost,
-                selectPost: selectPost,
-                gotoDetails: gotoDetails,
-                refresh: refresh,
-                //postadd: postadd
-            };
-    
+        //local properties
+        var selectedPost = ko.observable();
 
+        //durandal methods
         function activate() {
             return refresh();
+        };
+
+        //local methods
+        var selectPost = function () {
+            //todo bind this with jquery on event
+            vm.selectedPost(this);
+            toastr.info('Post selected');
+        };
+
+        var gotoDetails = function (post) {
+            //todo bind this with jquery on event
+            if (post && post.Id()) {
+                var url = '#/postdetail/' + post.Id();
+                router.navigateTo(url);
+            }
         };
 
         function refresh() {
             return dataservice.getPosts(posts);
         };
 
+        var vm = {
+            activate: activate,
+            posts: posts,
+            title: 'Posts',
+            selectedPost: selectedPost,
+            selectPost: selectPost,
+            gotoDetails: gotoDetails,
+            refresh: refresh
+        };
+           function refresh() {
+            return dataservice.getPosts(posts);
+        };
         return vm;
     });

@@ -7,8 +7,9 @@ namespace SlickBlog.Model
 {
     public class Comment
     {
-        public User User { get; set; }
+        public string Id { get; set; }
+        public string UserId { get; set; }
         public string Content { get; set; }
-        public Comment[] Replies { get; set; }
+        public string ReplyTo { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Spa.Web.Controllers
         public Post Get(string id)
         {
 
-            var post = RavenSession.Load<Post>(FormatId(id));
+            var post = RavenSession.Load<Post>(id);
             return post;
 
         }
@@ -30,15 +30,16 @@ namespace Spa.Web.Controllers
         // POST api/posts
         public string Post([FromBody]Post post)
         {
+            post.Id = null;
             RavenSession.Store(post);
-            return RavenSession.Advanced.GetDocumentId(post).Replace("posts/", "");
+            return RavenSession.Advanced.GetDocumentId(post);
         }
 
         // PUT api/posts/5
         public void Put(string id, [FromBody]Post updatedPost)
         {
             //TODO
-            var post = RavenSession.Load<Post>(FormatId(id));
+            var post = RavenSession.Load<Post>(id);
             post.Title = updatedPost.Title;
             post.ContentText = updatedPost.ContentText;
             post.Tags = updatedPost.Tags;
@@ -48,13 +49,9 @@ namespace Spa.Web.Controllers
         // DELETE api/posts/5
         public void Delete(string id)
         {
-            var post = RavenSession.Load<Post>(FormatId(id));
+            var post = RavenSession.Load<Post>(id);
             RavenSession.Delete(post);
         }
 
-        private string FormatId(string id)
-        {
-            return "posts/" + id;
-        }
     }
 }
