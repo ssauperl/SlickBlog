@@ -12,8 +12,24 @@
     <ul id="menu" data-bind="foreach: router.visibleRoutes">
         <li>
             <a data-bind="attr: { href: hash },
-            css: { active: isActive },
-            html: caption"></a>
+    css: { active: isActive },
+    html: caption"></a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav pull-right" data-bind="with: appsecurity.user">
+        <li data-bind="if: !IsAuthenticated">
+            <a href="/#/login"><i class="icon-user"></i>&nbsp; Login</a>
+        </li>
+        <li class="dropdown" data-bind="if: IsAuthenticated">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-user"></i>&nbsp; Hi <span data-bind="    text: UserName"></span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/#/account">Manage Profile</a></li>
+                <li class="divider"></li>
+                <li><a href="#" data-bind="click: $parent.logout">Logout</a></li>
+            </ul>
         </li>
     </ul>
 </nav>

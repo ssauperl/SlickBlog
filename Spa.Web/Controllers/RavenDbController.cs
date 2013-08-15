@@ -18,6 +18,7 @@ namespace Spa.Web.Controllers
         public IDocumentSession RavenSession { get; set; }
         public IDocumentStore DocumentStore { get; set; }
 
+
         protected override void Initialize(System.Web.Http.Controllers.HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);

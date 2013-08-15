@@ -1,6 +1,6 @@
 using System.Web.Optimization;
 
-namespace Spa.Web
+namespace Spa.Web.App_Start
 {
     public class LessTransform : IBundleTransform
     {

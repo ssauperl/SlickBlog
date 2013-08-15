@@ -37,7 +37,17 @@
         moduleId: 'viewmodels/tagsedit',
         name: 'Edit tags',
         visible: false
-    }];
+    }, {
+        url: 'login',
+        moduleId: 'viewmodels/login',
+        name: 'login',
+        visible: true
+    },
+    { url: 'login', moduleId: 'viewmodels/account/login', name: 'Login', visible: false },
+    { url: 'externalloginconfirmation', moduleId: 'viewmodels/account/externalloginconfirmation', name: 'External login confirmation', visible: false },
+	{ url: 'externalloginfailure', moduleId: 'viewmodels/account/externalloginfailure', name: 'External login failure', visible: false },
+	{ url: 'register', moduleId: 'viewmodels/account/register', name: 'Register', visible: false },
+	{ url: 'account', moduleId: 'viewmodels/account/account', name: 'Account', visible: false, settings: { authorize: ["User"] } }];
 
     var startModule = 'posts';
 
