@@ -149,19 +149,19 @@ define(['services/appsecurity', 'services/errorhandler', 'services/logger'], fun
             var icon = "";
             switch (data.Provider.toLowerCase()) {
                 case "facebook":
-                    icon = "icon-facebook-sign"
+                    icon = "icon-facebook-sign";
                     break;
                 case "twitter":
-                    icon = "icon-twitter-sign"
+                    icon = "icon-twitter-sign";
                     break;
                 case "google":
-                    icon = "icon-google-plus-sign"
+                    icon = "icon-google-plus-sign";
                     break;
                 case "microsoft":
-                    icon = "icon-envelope"
+                    icon = "icon-envelope";
                     break;
                 default:
-                    icon = "icon-check-sign"
+                    icon = "icon-check-sign";
             }
             return icon;
         }

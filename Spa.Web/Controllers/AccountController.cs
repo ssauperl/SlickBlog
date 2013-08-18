@@ -321,7 +321,7 @@ namespace Spa.Web.Controllers{
 
                 _roleProvider.AddUsersToRoles(new string[] { model.UserName }, new string[] { ConfigurationManager.AppSettings["DefaultRole"] });
 
-                IPrincipal principal = new GenericPrincipal(new GenericIdentity(model.UserName), null);
+                IPrincipal principal = new GenericPrincipal(new GenericIdentity(model.UserName), new string[] { ConfigurationManager.AppSettings["DefaultRole"] });
                 Thread.CurrentPrincipal = principal;
                 HttpContext.Current.User = principal;
 

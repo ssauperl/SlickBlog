@@ -11,9 +11,9 @@ function (appsecurity, router, utils, errorhandler) {
 
     var DisplayName = ko.observable(),
         UserName = ko.observable().extend({ required: true }),
-        Email = ko.observable().extend({ required: true, email:true }),
+        Email = ko.observable().extend({ required: true, email: true }),
         ExternalLoginData = ko.observable(),
-        ReturnUrl = ko.observable()
+        ReturnUrl = ko.observable();
     
     var viewmodel =  {
         /** @property {observable} DisplayName */
@@ -72,7 +72,7 @@ function (appsecurity, router, utils, errorhandler) {
     errorhandler.includeIn(viewmodel);
     
     viewmodel["errors"] = ko.validation.group(viewmodel);
-    
-    return viewmodel
-    
+
+    return viewmodel;
+
 });

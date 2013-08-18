@@ -19,7 +19,6 @@ namespace SlickBlog.Model
         public string Salt { get; set; }
         public string PasswordResetToken { get; set; }
         public DateTime PasswordResetTokenExpiration { get; set; }
-        public int FavoriteNumber { get; set; }
         public virtual ICollection<FlexOAuthAccount> OAuthAccounts { get; set; }
     }
 }

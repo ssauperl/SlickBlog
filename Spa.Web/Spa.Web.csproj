@@ -204,6 +204,7 @@
     <Compile Include="DependencyResolution\NinjectDependencyScope.cs" />
     <Compile Include="DependencyResolution\RavenModule.cs" />
     <Compile Include="Filters\AntiForgeryTokenAttribute.cs" />
+    <Compile Include="Filters\FlexAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -216,7 +217,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App\config.js" />
     <Content Include="App\main.js" />
-    <Content Include="App\services\ajax-util.js" />
     <Content Include="App\services\appsecurity.js" />
     <Content Include="App\services\dataservice.js" />
     <Content Include="App\services\errorhandler.js" />

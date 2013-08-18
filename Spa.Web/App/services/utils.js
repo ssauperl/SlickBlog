@@ -8,7 +8,7 @@ define(function () {
         getSaveValidationErrorMessage: getSaveValidationErrorMessage,
         getEntityValidationErrorMessage: getEntityValidationErrorMessage,
         getURLParameter: getURLParameter
-    }
+    };
 
     /**
      * Get parameters from url

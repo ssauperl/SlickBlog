@@ -19,12 +19,14 @@
             route: 'postadd',
             moduleId: 'viewmodels/postedit',
             title: 'Add Post',
-            nav: true
+            nav: true//,
+            //authorize: ["admin"]
         }, {
             route: 'postedit(/:id)',
             moduleId: 'viewmodels/postedit',
             name: 'edit post',
-            nav: false
+            nav: false//,
+            //authorize: ["admin"]
         }, {
             route: 'postdetail/:id',
             moduleId: 'viewmodels/postdetail',

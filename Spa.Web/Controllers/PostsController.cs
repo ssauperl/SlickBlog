@@ -1,16 +1,14 @@
 ﻿using SlickBlog.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using Spa.Web.Filters;
 
 namespace Spa.Web.Controllers
 {
     public class PostsController : RavenDbController
     {
         // GET api/posts
+        [AllowAnonymous]
         public IEnumerable<Post> Get()
         {
 
@@ -19,6 +17,7 @@ namespace Spa.Web.Controllers
         }
 
         // GET api/posts/5
+        [AllowAnonymous]
         public Post Get(string id)
         {
 
@@ -28,6 +27,8 @@ namespace Spa.Web.Controllers
         }
 
         // POST api/posts
+        [FlexAuthorize(Roles = "admin")]
+        [AntiForgeryToken]
         public string Post([FromBody]Post post)
         {
             post.Id = null;
@@ -36,6 +37,8 @@ namespace Spa.Web.Controllers
         }
 
         // PUT api/posts/5
+        [FlexAuthorize(Roles = "admin")]
+        [AntiForgeryToken]
         public void Put(string id, [FromBody]Post updatedPost)
         {
             //TODO

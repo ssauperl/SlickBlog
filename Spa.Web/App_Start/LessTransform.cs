@@ -1,4 +1,5 @@
 using System.Web.Optimization;
+using dotless.Core;
 
 namespace Spa.Web.App_Start
 {
@@ -6,7 +7,7 @@ namespace Spa.Web.App_Start
     {
         public void Process(BundleContext context, BundleResponse response)
         {
-            response.Content = dotless.Core.Less.Parse(response.Content);
+            response.Content = Less.Parse(response.Content);
             response.ContentType = "text/css";
         }
     }

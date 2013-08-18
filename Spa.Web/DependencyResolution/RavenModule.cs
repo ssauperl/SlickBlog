@@ -49,7 +49,7 @@ namespace Spa.Web.DependencyResolution
                 var roles = new FlexRoleProvider(store);
                 if (!membership.HasLocalAccount("admin"))
                 {
-                    membership.CreateAccount(new User { Username = "admin", Password = "sparocks", FavoriteNumber = 24 });
+                    membership.CreateAccount(new User { Username = "admin", Password = "sparocks" });
                 }
                 if (!roles.RoleExists(ConfigurationManager.AppSettings["AdminRole"]))
                 {
