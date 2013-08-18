@@ -1,11 +1,8 @@
-﻿<header class="navbar-fixed-top container">     
-    <!-- ko compose: {view: 'nav'} -->
-    <!-- /ko-->
-</header>
-<div class="container page-host">
-    <!--ko compose: { 
-        model: router.activeItem, //wiring the router
-        afterCompose: router.afterCompose, //wiring the router
-        transition:'entrance', //use the 'entrance' transition when switching views
-        }--><!--/ko-->
+﻿<div>
+    <header>     
+        <!-- ko compose: {view: 'header'} -->
+        <!-- /ko-->
+    </header>
+    <div class="container page-host" data-bind="router: { transition:'entrance', cacheViews:false }"></div>
 </div>
+<div class="st-sticky-push"></div>

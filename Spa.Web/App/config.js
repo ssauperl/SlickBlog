@@ -1,53 +1,67 @@
-﻿define(function () {
+﻿define(function() {
+    //toastr config
     toastr.options.timeOut = 4000;
     toastr.options.positionClass = 'toast-top-right';
+
+    //ko validation config
     ko.validation.configure({
         decorateElement: true,
         errorElementClass: 'has-error'
     });
 
-
+    //route config
     var routes = [{
-        url: 'posts',
-        moduleId: 'viewmodels/posts',
-        name: 'Posts',
-        visible: true
-    }, {
-        url: 'flickr',
-        moduleId: 'viewmodels/flickr',
-        name: 'Flickr',
-        visible: true
-    }, {
-        url: 'postadd',
-        moduleId: 'viewmodels/postedit',
-        name: 'Add Post',
-        visible: true
-    }, {
-        url: 'postedit/:id',
-        moduleId: 'viewmodels/postedit',
-        name: 'edit post',
-        visible: false
-    }, {
-        url: 'postdetail/:id',
-        moduleId: 'viewmodels/postdetail',
-        name: 'Edit false',
-        visible: false
-    }, {
-        url: 'tagsedit',
-        moduleId: 'viewmodels/tagsedit',
-        name: 'Edit tags',
-        visible: false
-    }, {
-        url: 'login',
-        moduleId: 'viewmodels/login',
-        name: 'login',
-        visible: true
-    },
-    { url: 'login', moduleId: 'viewmodels/account/login', name: 'Login', visible: false },
-    { url: 'externalloginconfirmation', moduleId: 'viewmodels/account/externalloginconfirmation', name: 'External login confirmation', visible: false },
-	{ url: 'externalloginfailure', moduleId: 'viewmodels/account/externalloginfailure', name: 'External login failure', visible: false },
-	{ url: 'register', moduleId: 'viewmodels/account/register', name: 'Register', visible: false },
-	{ url: 'account', moduleId: 'viewmodels/account/account', name: 'Account', visible: false, settings: { authorize: ["User"] } }];
+            route: 'posts',
+            moduleId: 'viewmodels/posts',
+            title: 'Posts',
+            nav: true
+        }, {
+            route: 'postadd',
+            moduleId: 'viewmodels/postedit',
+            title: 'Add Post',
+            nav: true
+        }, {
+            route: 'postedit(/:id)',
+            moduleId: 'viewmodels/postedit',
+            name: 'edit post',
+            nav: false
+        }, {
+            route: 'postdetail/:id',
+            moduleId: 'viewmodels/postdetail',
+            title: 'Edit false',
+            nav: false
+        }, {
+            route: 'tagsedit',
+            moduleId: 'viewmodels/tagsedit',
+            title: 'Edit tags',
+            nav: false
+        }, {
+            route: 'login',
+            moduleId: 'viewmodels/account/login',
+            title: 'Login',
+            nav: false
+        }, {
+            route: 'externalloginconfirmation',
+            moduleId: 'viewmodels/account/externalloginconfirmation',
+            title: 'External login confirmation',
+            nav: false
+        }, {
+            route: 'externalloginfailure',
+            moduleId: 'viewmodels/account/externalloginfailure',
+            title: 'External login failure',
+            nav: false
+        }, {
+            route: 'register',
+            moduleId: 'viewmodels/account/register',
+            title: 'Register',
+            nav: false
+        }, {
+            route: 'account',
+            moduleId: 'viewmodels/account/account',
+            title: 'Account',
+            nav: false,
+            authorize: ["user", "admin"]
+        }];
 
     var startModule = 'posts';
 

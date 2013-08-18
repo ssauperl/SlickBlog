@@ -5,29 +5,28 @@
     * @requires errorHandler
 */
 
-define(['services/appsecurity', 'durandal/plugins/router', 'services/errorhandler'],
+define(['services/appsecurity', 'plugins/router', 'services/errorhandler'],
     function (appsecurity, router, errorhandler) {
 
         var username = ko.observable().extend({ required: true }),
             email = ko.observable().extend({ required: true, email : true }),
             password = ko.observable().extend({ required: true, minLength: 6 }),
             confirmpassword = ko.observable().extend({ required: true, minLength: 6, equal : password });
-        
-        var viewmodel =  {
-            
+
+        var viewmodel = {            
             /** @property {observable} confirmNewPassword */
-            username : username,
+            username: username,
             
             /** @property {observable} email */
-            email : email,
+            email: email,
             
             /** @property {observable} password */
-            password :  password,
+            password: password,
             
             /** @property {observable} confirmpassword */
-            confirmpassword : confirmpassword,
-            
-            activate : function () {
+            confirmpassword: confirmpassword,
+
+            activate: function() {
                 ga('send', 'pageview', { 'page': window.location.href, 'title': document.title });
             },
 
@@ -35,16 +34,16 @@ define(['services/appsecurity', 'durandal/plugins/router', 'services/errorhandle
              * Register a new user
              * @method
             */
-            register : function () {
-                var self = this;                
-                if (this.errors().length != 0) {                    
+            register: function() {
+                var self = this;
+                if (this.errors().length != 0) {
                     this.errors.showAllMessages();
                     return;
                 }
                 appsecurity.register(this.username(), this.email(), this.password(), this.confirmpassword())
-                    .fail(self.handlevalidationerrors)
+                    .fail(self.handlevalidationerrors);
             }
-        }
+        };
 
         errorhandler.includeIn(viewmodel);
 

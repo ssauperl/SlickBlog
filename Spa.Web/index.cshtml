@@ -14,17 +14,19 @@
     </div>
 
 
-    <footer class="container">
+    <footer class="row">
         <div class="content-wrapper">
             <div class="float-left">
                 <p>Copyright &copy; @DateTime.Now.Year <a href="#">Simon Šauperl</a></p>
             </div>
         </div>
     </footer>
+    @RenderPage("Analytics.cshtml")
+
     @Scripts.Render(
         "~/bundles/libs"
         )
-    <script src="/App/durandal/amd/require.js" 
+    <script src="/Scripts/require.js" 
             data-main="App/main"></script>
 </body>
 </html>

@@ -1,49 +1,76 @@
 ﻿requirejs.config({
     paths: {
-        'text': 'durandal/amd/text'
+        'text': '../Scripts/text',
+        'durandal': '../Scripts/durandal',
+        'plugins': '../Scripts/durandal/plugins',
+        'transitions': '../Scripts/durandal/transitions'
+        //,
+        //'knockout': '../Scripts/knockout-2.3.0',
+        //'bootstrap': '../Scripts/bootstrap',
+        //'jquery': '../Scripts/jquery-2.0.3',
+        //'toastr': '../Scripts/toastr'
     }
+    //,
+    //shim: {
+    //    'bootstrap': {
+    //        deps: ['jquery'],
+    //        exports: 'jQuery'
+    //    },
+    //}
 });
 
-define(['durandal/app', 'durandal/viewLocator', 'durandal/system', 'durandal/plugins/router', 'services/logger', 'services/appsecurity'],
-    function (app, viewLocator, system, router, logger, appsecurity) {
+define('jquery', function () { return jQuery; });
+define('knockout', ko);
+
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/router', 'config', 'services/appsecurity'],
+    function (system, app, viewLocator, router, config, appsecurity) {
 
         //>>excludeStart("build", true);
         system.debug(true);
         //>>excludeEnd("build");
+        
+        app.title = 'SlickBlog';
 
-        //app.title = 'test';
+        //specify which plugins to install and their configuration
+        app.configurePlugins({
+            router: true,
+            dialog: true,
+            widget: {
+                kinds: ['expander']
+            }
+        });
+
+        
+        
         app.start().then(function () {
-            //configure routing
-            router.useConvention();
-
             //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
             //Look for partial views in a 'views' folder in the root.
             viewLocator.useConvention();
-
+            
+            //setup router
+            router.map(config.routes)
+                .buildNavigationModel()
+                .mapUnknownRoutes('viewmodels/posts', 'not-found');
+            
             // Add antiforgery => Validate on server
             appsecurity.addAntiForgeryTokenToAjaxRequests();
 
             // If the route has the authorize flag and the user is not logged in => navigate to login view
-            router.guardRoute = function (routeInfo) {
-                if (routeInfo.settings.authorize) {
-                    if (appsecurity.user().IsAuthenticated && appsecurity.isUserInRole(routeInfo.settings.authorize)) {
-                        return true
+            router.guardRoute = function (instance, instruction) {
+                if (instruction.config.authorize) {
+                    if (appsecurity.user().IsAuthenticated && appsecurity.isUserInRole(instruction.config.authorize)) {
+                        return true;
                     } else {
-                        return "/#/login?redirectto=" + routeInfo.url;
+                        return "/#/login?redirectto=" + instruction.config.hash;
                     }
                 }
                 return true;
-            }
+            };
 
-            //app.adaptToDevice();
+            
+            
 
             //Show the app by setting the root view model for our application with a transition.
             app.setRoot('viewmodels/shell', 'entrance');
-            app.adaptToDevice();
-            // override bad route behavior to write to 
-            // console log and show error toast
-            router.handleInvalidRoute = function (route, params) {
-                logger.logError('No route found', route, 'main', true);
-            };
         });
     });

@@ -1,4 +1,4 @@
-﻿define(['durandal/app', 'services/dataservice', 'durandal/plugins/router', 'viewmodels/tagsedit'],
+﻿define(['durandal/app', 'services/dataservice', 'plugins/router', 'viewmodels/tagsedit'],
     function (app, dataservice, router, tagsedit) {
         //properties
         var Id = ko.observable(),
@@ -40,8 +40,7 @@
         ko.validation.group(post, { deep: true });
 
         //durandal methods
-        var activate = function (routeData) {
-            var id = routeData.id;
+        var activate = function (id) {
             if (id) {
                 dataservice.getPostById(id, post).then(function () {
                     tagsedit.tags(post.Tags());
@@ -128,7 +127,7 @@
 
                     function success() {
                         resetModified();
-                        router.replaceLocation('#/posts');
+                        router.navigate('#/posts', { replace: true });
                     }
 
                     function failed(error) {

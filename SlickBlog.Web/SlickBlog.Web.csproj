@@ -229,7 +229,6 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\RavenDbController.cs" />
     <Compile Include="DependencyResolution\RavenModule.cs" />

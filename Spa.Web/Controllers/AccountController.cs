@@ -10,7 +10,6 @@ using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Security;
 using System.Threading;
-using WebMatrix.WebData;
 using FlexProviders.Membership;
 using SlickBlog.Model;
 using FlexProviders.Roles;
@@ -28,18 +27,17 @@ namespace Spa.Web.Controllers{
         private readonly IFlexOAuthProvider<User> _oAuthProvider;
         private readonly IFlexRoleProvider _roleProvider;
         private readonly ISecurityEncoder _encoder = new DefaultSecurityEncoder();
-    
+        private readonly IFlexUserStore<User> _userStore;
+
 
         /// <summary>
         /// This controller provide the authentication api for the entire application
         /// </summary>
-        /// <param name="uow">Unit of work</param>
-
-
-        public AccountController(IFlexMembershipProvider<User> membership, IFlexOAuthProvider<User> oauth, IFlexRoleProvider roles) {
+        public AccountController(IFlexMembershipProvider<User> membership, IFlexOAuthProvider<User> oauth, IFlexRoleProvider roles, IFlexUserStore<User> userStore) {
             _membershipProvider = membership;
             _oAuthProvider = oauth;
             _roleProvider = roles;
+            _userStore = userStore;
         }
 
         /// <summary>
@@ -113,7 +111,7 @@ namespace Spa.Web.Controllers{
         {
             try
             {
-                var user = new User { Username = model.UserName, Password = model.Password };
+                var user = new User { Username = model.UserName, Email = model.Email, Password = model.Password };
                 _membershipProvider.CreateAccount(user);
                 _membershipProvider.Login(model.UserName, model.Password);
                 _roleProvider.AddUsersToRoles(new string[] { model.UserName }, new string[] { ConfigurationManager.AppSettings["DefaultRole"] });
@@ -142,7 +140,7 @@ namespace Spa.Web.Controllers{
         [AllowAnonymous]
         public UserInfo UserInfo()
         {
-            if (WebSecurity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 return new UserInfo
                 {
@@ -170,7 +168,7 @@ namespace Spa.Web.Controllers{
         public IEnumerable<ExternalLogin> ExternalLoginsList()
         {
             var externalLogins = new List<ExternalLogin>();
-            foreach (var client in OAuthWebSecurity.RegisteredClientData)
+            foreach (var client in _oAuthProvider.RegisteredClientData)
             {
                 externalLogins.Add(new ExternalLogin
                 {
@@ -217,7 +215,7 @@ namespace Spa.Web.Controllers{
             try
             {
                 //AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication();
-                AuthenticationResult result = _oAuthProvider.VerifyOAuthAuthentication(returnUrl);
+                var result = _oAuthProvider.VerifyOAuthAuthentication(returnUrl);
                 if (!result.IsSuccessful)
                 {
                     var response = Request.CreateResponse(HttpStatusCode.Redirect);
@@ -238,6 +236,7 @@ namespace Spa.Web.Controllers{
                 if (User.Identity.IsAuthenticated)
                 {
                     // If the current user is logged in add the new account
+                    // TODO This probably overrides user data with username (check it)
                     _oAuthProvider.CreateOAuthAccount(result.Provider, result.ProviderUserId, new User() { Username = User.Identity.Name });
                     var response = Request.CreateResponse(HttpStatusCode.Redirect);
                     response.Headers.Location = new Uri("http://" + Request.RequestUri.Authority + "/#/" + returnUrl);
@@ -246,9 +245,11 @@ namespace Spa.Web.Controllers{
                 else
                 {
                     // User is new, ask for their desired membership name
-                    string loginData = _encoder.SerializeOAuthProviderUserId(result.Provider, result.ProviderUserId);
-                    //ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-                    //ViewBag.ReturnUrl = returnUrl;
+
+                    // We could send serialized data in response...
+                    var loginData = _encoder.SerializeOAuthProviderUserId(result.Provider, result.ProviderUserId);
+
+                    // ...but we exstract it manualy
                     var response = Request.CreateResponse(HttpStatusCode.Redirect);
                     response.Headers.Location = new Uri("http://" + Request.RequestUri.Authority + "/#/externalloginconfirmation?returnurl=" + returnUrl + "&username=" + result.UserName + "&provideruserid=" + result.ProviderUserId + "&provider=" + result.Provider);
                     return response;
@@ -274,13 +275,13 @@ namespace Spa.Web.Controllers{
         [AllowAnonymous]
         public RegisterExternalLoginModel ExternalLoginConfirmation(string returnUrl, string username, string provideruserid, string provider)
         {
-            RegisterExternalLoginModel model = new RegisterExternalLoginModel();
+            var model = new RegisterExternalLoginModel();
             if (!User.Identity.IsAuthenticated)
             {
                 // User is new, ask for their desired membership name
                 string loginData = _encoder.SerializeOAuthProviderUserId(provider, provideruserid);
                 model.UserName = username;
-                model.Email = username;
+                model.Email = username;//TODO Check if this is alright, we probably need email here
                 model.DisplayName = _oAuthProvider.GetOAuthClientData(provider).DisplayName;
                 model.ReturnUrl = returnUrl;
                 model.ExternalLoginData = loginData;
@@ -307,15 +308,15 @@ namespace Spa.Web.Controllers{
             }
 
             // Insert a new user into the database
-            var user =  RavenSession.Query<User>().FirstOrDefault(u => u.Username.ToLower() == model.UserName.ToLower());
+            //var user =  RavenSession.Query<User>().FirstOrDefault(u => u.Username.ToLower() == model.UserName.ToLower());
 
             // Check if user already exists
-            if (user == null)
+            if (!_membershipProvider.Exists(model.UserName))
             {
                 // Insert name into the profile table
                 //UnitOfWork.UserProfileRepository.Add(new UserProfile { UserName = model.UserName, Email = model.Email });
                 //UnitOfWork.Commit();
-                _oAuthProvider.CreateOAuthAccount(provider, providerUserId, new User() { Username = User.Identity.Name });
+                _oAuthProvider.CreateOAuthAccount(provider, providerUserId, new User() { Username = model.UserName, Email = model.Email});
                 _oAuthProvider.OAuthLogin(provider, providerUserId, false);
 
                 _roleProvider.AddUsersToRoles(new string[] { model.UserName }, new string[] { ConfigurationManager.AppSettings["DefaultRole"] });
@@ -357,6 +358,9 @@ namespace Spa.Web.Controllers{
         public HttpResponseMessage ChangePassword(ChangePasswordModel model)
         {
             bool changePasswordSucceeded;
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                    "Password and confirmation should match"));
             try
             {
                 changePasswordSucceeded = _membershipProvider.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
@@ -370,12 +374,8 @@ namespace Spa.Web.Controllers{
             {
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
-            else
-            {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The current password is incorrect or the new password is invalid."));
-            }
-
-            throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Password and confirmation should match"));
+            
+            throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "The current password is incorrect or the new password is invalid."));
         }
 
         /// <summary>
@@ -387,9 +387,18 @@ namespace Spa.Web.Controllers{
         [AntiForgeryToken]
         public HttpResponseMessage CreateLocalAccount(CreateLocalAccountModel model)
         {
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                    "Password and confirmation should match"));
             try
             {
-                _membershipProvider.CreateAccount(new User() { Username = User.Identity.Name, Password = model.NewPassword });
+                var user = _userStore.GetUserByUsername(User.Identity.Name);
+                // We set new password to the existing account
+                user.Password = model.NewPassword;
+                _membershipProvider.UpdateAccount(user);
+                
+                // TODO: It was done this way in sample contoller. Needs to be checked.
+                //_membershipProvider.CreateAccount(new User() { Username = User.Identity.Name, Password = model.NewPassword });
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)
@@ -409,7 +418,9 @@ namespace Spa.Web.Controllers{
         {
             string cookieToken = "", formToken = "";
             AntiForgery.GetTokens(null, out cookieToken, out formToken);
-            HttpContext.Current.Response.Cookies[AntiForgeryConfig.CookieName].Value = cookieToken;
+            var httpCookie = HttpContext.Current.Response.Cookies[AntiForgeryConfig.CookieName];
+            if (httpCookie != null)
+                httpCookie.Value = cookieToken;
             return formToken;
         }
 
@@ -422,10 +433,10 @@ namespace Spa.Web.Controllers{
         {
 
             var accounts = _oAuthProvider.GetOAuthAccountsFromUserName(User.Identity.Name);
-            List<ExternalLogin> externalLogins = new List<ExternalLogin>();
-            foreach (OAuthAccount account in accounts)
+            var externalLogins = new List<ExternalLogin>();
+            foreach (var account in accounts)
             {
-                AuthenticationClientData clientData = _oAuthProvider.GetOAuthClientData(account.Provider);
+                var clientData = _oAuthProvider.GetOAuthClientData(account.Provider);
 
                 externalLogins.Add(new ExternalLogin
                 {
@@ -434,7 +445,7 @@ namespace Spa.Web.Controllers{
                     ProviderUserId = account.ProviderUserId,
                 });
             }
-            ExternalAccounts externalLoginList = new ExternalAccounts();
+            var externalLoginList = new ExternalAccounts();
             externalLoginList.ExternalLogins = externalLogins;
             externalLoginList.ShowRemoveButton = externalLogins.Count > 1 || _membershipProvider.HasLocalAccount(User.Identity.Name);
             return externalLoginList;
@@ -443,35 +454,23 @@ namespace Spa.Web.Controllers{
         /// <summary>
         /// Dissasociate an external account
         /// </summary>
-        /// <param name="provider">The registered provider</param>
-        /// <param name="providerUserId">The Id in the provider</param>
         /// <returns>http response</returns>
         [HttpPost]
         [AntiForgeryToken]
         public HttpResponseMessage Disassociate(DissasociateModel model)
         {
-             
-            
-
-            string ownerAccount =  _oAuthProvider.GetOAuthClientData(model.Provider).DisplayName;
-                //AuthWebSecurity.GetUserName(model.Provider, model.ProviderUserId);
-
+            var ownerAccount = _userStore.GetUserByOAuthProvider(model.Provider, model.ProviderUserId).Username;
             // Dissasociate account if authenticated user is the owner
             if (ownerAccount == User.Identity.Name)
             {
-                // Using transaction to avoid dissasociation of the last linked account
-                using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+                var hasLocalAccount = _membershipProvider.HasLocalAccount(User.Identity.Name);
+                if (hasLocalAccount || _oAuthProvider.GetOAuthAccountsFromUserName(User.Identity.Name).Count() > 1)
                 {
-                    bool hasLocalAccount = _membershipProvider.HasLocalAccount(User.Identity.Name);
-                    if (hasLocalAccount || _oAuthProvider.GetOAuthAccountsFromUserName(User.Identity.Name).Count() > 1)
-                    {
-                        _oAuthProvider.DisassociateOAuthAccount(model.Provider, model.ProviderUserId);
-                        scope.Complete();
-                    }
+                    _oAuthProvider.DisassociateOAuthAccount(model.Provider, model.ProviderUserId);
+                    return Request.CreateResponse(HttpStatusCode.OK, "Account succesfully dissasociated");
                 }
-                return Request.CreateResponse(HttpStatusCode.OK, "Account succesfully dissasociated");
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You cannot disassociate the last linked account"));
             }
-
             throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You are not the account owner"));
         }
        

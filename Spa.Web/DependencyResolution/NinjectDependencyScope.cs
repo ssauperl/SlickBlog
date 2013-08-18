@@ -7,6 +7,7 @@ using Ninject.Syntax;
 
 namespace Spa.Web.DependencyResolution
 {
+    // http://www.peterprovost.org/blog/2012/06/19/adding-ninject-to-web-api/
     public class NinjectDependencyScope : IDependencyScope
     {
         private IResolutionRoot resolver;

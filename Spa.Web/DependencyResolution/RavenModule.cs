@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using FlexProviders.Aspnet;
 using FlexProviders.Membership;
 using FlexProviders.Raven;
@@ -46,22 +47,26 @@ namespace Spa.Web.DependencyResolution
 
                 var membership = new FlexMembershipProvider<User>(store, new AspnetEnvironment());
                 var roles = new FlexRoleProvider(store);
-                if (!membership.HasLocalAccount("sallen"))
+                if (!membership.HasLocalAccount("admin"))
                 {
-                    membership.CreateAccount(new User { Username = "sallen", Password = "123", FavoriteNumber = 24 });
+                    membership.CreateAccount(new User { Username = "admin", Password = "sparocks", FavoriteNumber = 24 });
                 }
-                if (!roles.RoleExists("admin"))
+                if (!roles.RoleExists(ConfigurationManager.AppSettings["AdminRole"]))
                 {
-                    roles.CreateRole("admin");
+                    roles.CreateRole(ConfigurationManager.AppSettings["AdminRole"]);
                 
                 }
-                if (!roles.RoleExists("user"))
+                if (!roles.RoleExists(ConfigurationManager.AppSettings["DefaultRole"]))
                 {
-                    roles.CreateRole("user");
+                    roles.CreateRole(ConfigurationManager.AppSettings["DefaultRole"]);
                 }
-                if (!roles.IsUserInRole("sallen", "admin"))
+                if (!roles.IsUserInRole("admin", ConfigurationManager.AppSettings["AdminRole"]))
                 {
-                    roles.AddUsersToRoles(new[] { "sallen" }, new[] { "admin" });
+                    roles.AddUsersToRoles(new[] { "admin" }, new[] { ConfigurationManager.AppSettings["AdminRole"] });
+                }
+                if (!roles.IsUserInRole("admin", ConfigurationManager.AppSettings["DefaultRole"]))
+                {
+                    roles.AddUsersToRoles(new[] { "admin" }, new[] { ConfigurationManager.AppSettings["DefaultRole"] });
                 }
 
 

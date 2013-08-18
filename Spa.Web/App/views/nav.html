@@ -9,13 +9,16 @@
 </button>
 
 <nav class="toggle-nav">
-    <ul id="menu" data-bind="foreach: router.visibleRoutes">
-        <li>
-            <a data-bind="attr: { href: hash },
-    css: { active: isActive },
-    html: caption"></a>
+    
+    <ul class="nav" data-bind="foreach: router.navigationModel">
+        <li data-bind="css: { active: isActive }">
+            <a data-bind="attr: { href: hash }, html: title"></a>
         </li>
     </ul>
+    <div class="loader pull-right" data-bind="css: { active: router.isNavigating }">
+        <i class="icon-spinner icon-2x icon-spin"></i>
+    </div>
+
     <ul class="nav navbar-nav pull-right" data-bind="with: appsecurity.user">
         <li data-bind="if: !IsAuthenticated">
             <a href="/#/login"><i class="icon-user"></i>&nbsp; Login</a>

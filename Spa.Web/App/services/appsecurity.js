@@ -5,11 +5,8 @@
 	* @requires router
 */
 
-define(function (require) {
-
-	var system = require('durandal/system'),
-		app = require('durandal/app'),
-		router = require('durandal/plugins/router');
+define(['durandal/system', 'durandal/app', 'plugins/router'],
+    function (system, app, router) {
 		
 	var self = this;
 	
@@ -19,34 +16,31 @@ define(function (require) {
 	/**         
 	 * @class
 	 * @classdesc Helper class for building credentials 
-	*/    
-	var credential = function (username, password, rememberme) {
-		this.userName = username;
-		this.password = password;
-		this.rememberMe = rememberme;
-	},
-	
-	/** @property {observable} user - Remember always to check again in server because this info can be tampered easily */
-	user = ko.observable({IsAuthenticated : false, UserName : "", Roles : [], AntiforgeryToken : null}),
-
-	/** @property {observable} externalLogins - External Logins container */
-	externalLogins = ko.observable(),    
-
-	/**
+	*/
+    var credential = function(username, password, rememberme) {
+        this.userName = username;
+        this.password = password;
+        this.rememberMe = rememberme;
+    },	
+        /** @property {observable} user - Remember always to check again in server because this info can be tampered easily */
+        user = ko.observable({ IsAuthenticated: false, UserName: "", Roles: [], AntiforgeryToken: null }),
+        /** @property {observable} externalLogins - External Logins container */
+        externalLogins = ko.observable(),
+        /**
 	 * Add antiforgery to ajax requests with content 
 	 * The server filter processing the requests with content is Filters/AntiForgeryTokenAttribute.cs
 	 * @method
 	*/
-	addAntiForgeryTokenToAjaxRequests = function () {
-		$.get(baseAdress + "/getantiforgerytokens").then(function (token) {
-			user().AntiforgeryToken = token;
-			$(document).ajaxSend(function (event, request, options) {
-				if (options.hasContent) {	                
-					request.setRequestHeader("__RequestVerificationToken", token);
-				}
-			});
-		});
-	}
+        addAntiForgeryTokenToAjaxRequests = function() {
+            $.get(baseAdress + "/getantiforgerytokens").then(function(token) {
+                user().AntiforgeryToken = token;
+                $(document).ajaxSend(function(event, request, options) {
+                    if (options.hasContent) {
+                        request.setRequestHeader("__RequestVerificationToken", token);
+                    }
+                });
+            });
+        };
 
 	return {
 		credential: credential,
@@ -86,9 +80,9 @@ define(function (require) {
 					self.addAntiForgeryTokenToAjaxRequests();
 					if (data.IsAuthenticated == true) {
 						if (navigateToUrl) {
-							router.navigateTo("#/" + navigateToUrl);
+						    router.navigate("#/" + navigateToUrl);
 						} else {
-							router.navigateTo("/#/account");
+						    router.navigate("/#/account");
 						}
 					}
 				})
@@ -110,8 +104,8 @@ define(function (require) {
 				.done(function (data) {
 					self.user(data);
 					self.addAntiForgeryTokenToAjaxRequests();
-					if (router.activeRoute().settings.authorize != null) {
-						router.navigateTo("/#/home");
+					if (router.activeInstruction().config.authorize != null) {
+					    router.navigate("/#/home");
 					}
 				})
 				.fail(function (data) {
@@ -135,7 +129,7 @@ define(function (require) {
 				.done(function (data) {
 					self.user(data);
 					self.addAntiForgeryTokenToAjaxRequests();
-					router.navigateTo("/#/account");
+					router.navigate("/#/account");
 				});
 			return promise;
 		},

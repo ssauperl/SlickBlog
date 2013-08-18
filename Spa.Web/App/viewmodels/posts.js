@@ -1,4 +1,4 @@
-﻿define(['services/dataservice', 'durandal/plugins/router'],
+﻿define(['services/dataservice', 'plugins/router'],
     function (dataservice, router) {
         //properties
         var posts = ko.observableArray();
@@ -22,7 +22,7 @@
             //todo bind this with jquery on event
             if (post && post.Id()) {
                 var url = '#/postdetail/' + post.Id();
-                router.navigateTo(url);
+                router.navigate(url);
             }
         };
 

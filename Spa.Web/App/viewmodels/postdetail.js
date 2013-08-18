@@ -1,5 +1,5 @@
 ﻿define(['services/dataservice',
-        'durandal/plugins/router',
+        'plugins/router',
         'durandal/system',
         'durandal/app',
         'services/logger'],
@@ -9,8 +9,7 @@
         var deferred = $.Deferred();
 
         //durandal methods
-        var activate = function (routeData) {
-                var id = routeData.id;
+        var activate = function (id) {
                 dataservice.getPostById(id, post).always(function () { deferred.resolve(); });;
                 return deferred.promise();
         };
@@ -19,7 +18,7 @@
         var select = function () {
             if (post && post.Id()) {
                 var url = '#/postedit/' + post.Id();
-                router.navigateTo(url);
+                router.navigate(url);
             }
         };
 

@@ -6,8 +6,8 @@
     * @requires errorHandler
 */
 
-define(['services/appsecurity', 'durandal/plugins/router', 'services/utils', 'services/errorhandler'],
-function (appsecurity,router,utils,errorhandler) {
+define(['services/appsecurity', 'plugins/router', 'services/utils', 'services/errorhandler'],
+function (appsecurity, router, utils, errorhandler) {
 
     var DisplayName = ko.observable(),
         UserName = ko.observable().extend({ required: true }),
@@ -64,7 +64,7 @@ function (appsecurity,router,utils,errorhandler) {
             }
             appsecurity.confirmExternalAccount(self.DisplayName(), self.UserName(), self.Email(), self.ExternalLoginData())
                 .then(function (data) {                    
-                    router.navigateTo("/#/" + self.ReturnUrl());
+                    router.navigate("/#/" + self.ReturnUrl());
                 }).fail(self.handlevalidationerrors);
             }
     }
