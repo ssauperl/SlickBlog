@@ -1,22 +1,62 @@
 ﻿<section class="post-detail">
-   <h3 data-bind="text: title"></h3>
-   <article data-bind="with: post">
-       <h1 data-bind="text: Title"></h1>
-       <ul data-bind="foreach: Tags">
-           <li data-bind="text: $data"></li>
-       </ul>
-       <div data-bind="html: ContentText"></div>
-   </article>
-   <button class="btn btn-default" data-bind="click: select">Edit post</button>
+    <article class="post" data-bind="with: post">
+        <header class="post-header">
+            <div class="post-title">
+                <h1>
+                    <a data-bind="text: title"></a>
+                </h1>
+            </div>
+            <div class="post-meta">
+                <time data-bind="text: postedOn"></time>
+                <span data-bind="text: userId"></span>
+            </div>
+        </header>
+
+        <div class="post-tags" data-bind="foreach: tags">
+            <span class="post-tag" data-bind="text: $data"></span>
+        </div>
+        <div class="post-content" data-bind="text: content"></div>
+        <div class="post-actions">
+            <button class="btn btn-default" data-bind="click: $parent.select">Edit post</button>
+        </div>
+    </article>
 </section>
 
-<section class="post-comments">
+<section class="post-comments" data-bind="foreach: post.comments">
+    <div class="post-comment">
+        <div class="post-comment-meta">
+            <span data-bind="text: id"></span>
+            <span data-bind="text: postedOn"></span>
+            <span data-bind="text: userId"></span>
+        </div>
+        <div class="post-comment-content" data-bind="text: content"></div>
+        <div class="post-comment-actions">
+            <button class="btn btn-default">reply</button>
+            <button class="btn btn-default" data-bind="click: $parent.editComment">edit</button>
+            <button class="btn btn-danger" data-bind="click: $parent.deleteComment">delete</button>
+        </div>
+    </div>
+</section>
 
-<div class="form-group" data-bind="validationElement: Content">
-            <label for="postContent" class="control-label">Content</label>
+<section class="comment-editor">
+    <header class="comment-editor-header">
+        <h3>Comment editor</h3>
+    </header>
+    <form class="view-list"  data-bind="with: comment">
+        <div class="form-group" data-bind="validationElement: content">
+            <label for="commentContent" class="control-label">Content</label>
             <div class="control">
-                <textarea id="commentContent" class="form-control" rows="3" data-bind="value: Content, valueUpdate: 'afterkeydown'"></textarea>
+                <textarea id="commentContent" class="form-control" rows="3" data-bind="value: content, valueUpdate: 'afterkeydown'"></textarea>
             </div>
         </div>
+        <div class="form-group">
+            <div class="control">
+                <button class="btn btn-default" data-bind="click: $parent.saveComment">Save</button>
+                <button class="btn btn-default" data-bind="click: $parent.dismissComment">Cancel</button>
+            </div>
+        </div>
+    </form>
 </section>
+
+
 

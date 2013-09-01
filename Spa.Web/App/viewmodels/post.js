@@ -1,12 +1,14 @@
 ﻿define(function () {
-    var Post = function () {
+    var Post = function() {
         var self = this;
-        self.Id = ko.observable();
-        self.Title = ko.observable().extend({ required: true });
-        self.ContentText = ko.observable().extend({ required: true });
-        self.Tags = ko.observableArray();
-        self.BlogId = ko.observable();
-    }
+        self.id = ko.observable();
+        self.userId = ko.observable();
+        self.title = ko.observable().extend({ required: true });
+        self.contentText = ko.observable().extend({ required: true });
+        self.tags = ko.observableArray();
+        self.comments = ko.observableArray();
+        self.blogId = ko.observable();
+    };
 
     return Post;
 

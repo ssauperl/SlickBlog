@@ -7,15 +7,15 @@
                 </div>
                 <div class="form-group" data-bind="validationElement: withLocalForm.oldPassword">
                     <label class="control-label" for="oldpassword">Old Password</label>
-                    <input class="form-control" type="password"  data-bind="value: withLocalForm.oldPassword" placeholder="Old Password">
+                    <input class="form-control" type="password" id="oldpassword"  data-bind="value: withLocalForm.oldPassword" placeholder="Old Password">
                 </div>                   
                 <div class="form-group" data-bind="validationElement: withLocalForm.newPassword">
                     <label class="control-label" for="newPassword">New Password</label>                   
-                    <input class="form-control" type="password"  data-bind="value: withLocalForm.newPassword" placeholder="New Password">                                        
+                    <input class="form-control" type="password" id="newPassword"  data-bind="value: withLocalForm.newPassword" placeholder="New Password">                                        
                 </div>  
                 <div class="form-group" data-bind="validationElement: withLocalForm.confirmNewPassword">
                        <label class="control-label" for="confirmNewPassword">Confirm new Password</label>
-                       <input class="form-control" type="password"  data-bind="value: withLocalForm.confirmNewPassword" placeholder="Confirm New Password">                                           
+                       <input class="form-control" type="password" id="confirmNewPassword"  data-bind="value: withLocalForm.confirmNewPassword" placeholder="Confirm New Password">                                           
                 </div>                                                      
                 <div class="panel-footer">
                     <button type="submit" class="btn btn-primary">Change password</button>
@@ -30,11 +30,11 @@
                 </div>
                 <div class="form-group" data-bind="validationElement: withoutLocalForm.newPassword">
                     <label class="control-label" for="newPassword">New Password</label>                       
-                    <input class="form-control" type="password"  data-bind="value: withoutLocalForm.newPassword" placeholder="New Password">                                               
+                    <input class="form-control" type="password" id="newPassword" data-bind="value: withoutLocalForm.newPassword" placeholder="New Password">                                               
                 </div>  
                 <div class="form-group" data-bind="validationElement: withoutLocalForm.confirmNewPassword">
                     <label class="control-label" for="confirmNewPassword">Confirm new Password</label>
-                    <input class="form-control" type="password"  data-bind="value: withoutLocalForm.confirmNewPassword" placeholder="Confirm New Password">                                           
+                    <input class="form-control" type="password" id="confirmNewPassword"  data-bind="value: withoutLocalForm.confirmNewPassword" placeholder="Confirm New Password">                                           
                 </div>         
                <div class="panel-footer">
                     <button type="submit" class="btn btn-primary">Create local account</button>
@@ -52,7 +52,7 @@
             <div data-bind="foreach : externalAccounts">
                 <div class="row">
                     <div class="col-4">
-                        <p class="lead" data-bind="text : ProviderDisplayName" style="border:none"></p>
+                        <p class="lead" data-bind="text : providerDisplayName" style="border:none"></p>
                     </div>
                     <div class="col-8" data-bind="if : $parent.showRemoveButton">
                         <a class="btn btn-danger" href="#" data-bind="click : function(data,event) { $parent.removeExternalAccount($parent,data,event); }, text : 'Remove'"></a>
@@ -62,9 +62,9 @@
         </div>        
         <h3>Associate more external accounts to this one</h3>
         <div class="list-group" data-bind="foreach: appsecurity.externalLogins">                        
-            <a class="list-group-item lead" href="#"  data-bind="click: function (data, event) { $parent.externalLogin($parent, data, event) }, attr: { 'data-provider': Provider }">
+            <a class="list-group-item lead" href="#"  data-bind="click: function (data, event) { $parent.externalLogin($parent, data, event) }, attr: { 'data-provider': provider }">
                 <i data-bind="css: $parent.socialIcon($data)"></i>
-                <span data-bind="text: ProviderDisplayName"></span>
+                <span data-bind="text: providerDisplayName"></span>
             </a>
         </div>
     </div>

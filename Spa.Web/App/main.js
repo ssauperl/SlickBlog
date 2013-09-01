@@ -3,28 +3,54 @@
         'text': '../Scripts/text',
         'durandal': '../Scripts/durandal',
         'plugins': '../Scripts/durandal/plugins',
-        'transitions': '../Scripts/durandal/transitions'
-        //,
-        //'knockout': '../Scripts/knockout-2.3.0',
-        //'bootstrap': '../Scripts/bootstrap',
-        //'jquery': '../Scripts/jquery-2.0.3',
-        //'toastr': '../Scripts/toastr'
+        'transitions': '../Scripts/durandal/transitions',
+        'knockout': '../Scripts/knockout-2.3.0',
+        'ko.mapping': '../Scripts/knockout.mapping-latest',
+        'ko.validation': '../Scripts/knockout.validation',
+        'bootstrap': '../Scripts/bootstrap',
+        'jquery': '../Scripts/jquery-2.0.3',
+        'toastr': '../Scripts/toastr',
+        'wysihtml5ParserRules': '../Scripts/wysihtml5/parser_rules/advanced',
+        'wysihtml5': '../Scripts/wysihtml5/wysihtml5-0.3.0'
+        
     }
-    //,
-    //shim: {
-    //    'bootstrap': {
-    //        deps: ['jquery'],
-    //        exports: 'jQuery'
-    //    },
-    //}
+    ,
+    shim: {
+        'bootstrap': {
+            deps: ['jquery'],
+            exports: 'jQuery'
+        },
+        'wysihtml5': {
+            deps: ['wysihtml5ParserRules'],
+            exports: 'wysihtml5'
+        },
+        //'bootstrap-wysihtml5': {
+        //    deps: ['wysihtml5'],
+        //    exports: 'bootstrap-wysihtml5'
+        //},
+        //'ko.validation': {
+        //    deps: ['knockout'],
+        //    exports: 'ko.validation'
+        //},
+        'ko.mapping': {
+            deps: ['knockout'],
+            exports: 'ko.mapping'
+        }
+    }
 });
 
-define('jquery', function () { return jQuery; });
-define('knockout', ko);
+//define('jquery', function () { return jQuery; });
+//define('knockout', ko);
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/router', 'config', 'services/appsecurity'],
-    function (system, app, viewLocator, router, config, appsecurity) {
 
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/router', 'knockout', 'config', 'services/appsecurity'],
+    function (system, app, viewLocator, router, ko, config, appsecurity) {
+
+        // ensure KO is in the global namespace ('this')
+        if (!this.ko) {
+            this.ko = ko;
+        };
+        
         //>>excludeStart("build", true);
         system.debug(true);
         //>>excludeEnd("build");
@@ -58,7 +84,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/rout
             // If the route has the authorize flag and the user is not logged in => navigate to login view
             router.guardRoute = function (instance, instruction) {
                 if (instruction.config.authorize) {
-                    if (appsecurity.user().IsAuthenticated && appsecurity.isUserInRole(instruction.config.authorize)) {
+                    if (appsecurity.user().isAuthenticated && appsecurity.isUserInRole(instruction.config.authorize)) {
                         return true;
                     } else {
                         return "/#/login?redirectto=" + instruction.config.hash;

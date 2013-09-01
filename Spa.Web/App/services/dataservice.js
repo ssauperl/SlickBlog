@@ -1,5 +1,8 @@
-﻿define(['durandal/system', 'services/logger'],
-    function (system, logger) {
+﻿define(['durandal/system', 'services/logger', 'knockout', 'ko.mapping'],
+    function (system, logger, ko, komapping) {
+        ko.mapping = komapping;
+        
+        //posts
         var getPosts = function (postsObservable) {
             postsObservable([]);
             var options = {
@@ -12,10 +15,14 @@
 
             function querySucceeded(data) {
                 var mapping = {
-                    'ignore': ["Blog", "Comments"]
-                }
+                    'postedOn': {
+                        update: function (options) {
+                            return new Date(options.data).toLocaleString();
+                        }
+                    }
+                };
 
-                ko.mapping.fromJS(data, {}, postsObservable);
+                ko.mapping.fromJS(data, mapping, postsObservable);
                 log('Retrieved Posts from remote data source', data, true);
             }
         };
@@ -31,15 +38,14 @@
 
             function querySucceeded(data) {
                 var mapping = {
-                    'ignore': ["Blog", "Comments"]
-                }
+                    'include': ["Comments"]
+                };
 
-                ko.mapping.fromJS(data, {}, postVm);
+                ko.mapping.fromJS(data, mapping, postVm);
                 log('Retrieved Post from remote data source', data, true);
             }
         };
-
-
+        
         var savePost = function (postVm) {
             var options = {
                 url: '/api/posts/',
@@ -53,7 +59,7 @@
 
             function querySucceeded(data) {
                 //setting post.Id so we know where to redirect the user
-                postVm.Id(data);
+                postVm.id(data);
                 log('Post saved to remote data source', data, true);
             }
         };
@@ -89,12 +95,78 @@
             }
         };
 
+        //comments
+        var getComment = function(postId, commentId, commentVm) {
+            var options = {
+                url: '/api/comments/' + postId + '/' + commentId,
+                type: 'GET',
+                dataType: 'json'
+            };
+            
+            return $.ajax(options).then(querySucceeded).fail(queryFailed);
+
+            function querySucceeded(data) {
+                ko.mapping.fromJS(data, {}, commentVm);
+                log('Retrieved Comment from remote data source', data, true);
+            }
+        };
+        
+        var saveComment = function (postId, commentVm) {
+            var options = {
+                url: '/api/comments/' + postId,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: ko.toJSON(commentVm)
+            };
+
+            return $.ajax(options).then(querySucceeded).fail(queryFailed);
+
+            function querySucceeded(data) {
+                log('Comment saved to remote data source', data, true);
+            }
+        };
+        
+        var updateComment = function (postId, commentVm) {
+            var options = {
+                url: '/api/comments/' + postId,
+                type: 'PUT',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: ko.toJSON(commentVm)
+            };
+
+            return $.ajax(options).then(querySucceeded).fail(queryFailed);
+
+            function querySucceeded(data) {
+                log('Comment saved to remote data source', data, true);
+            }
+        };
+        
+        var deleteComment = function (postId, commentId) {
+            var options = {
+                url: '/api/comments/' + postId + "/" + commentId,
+                type: 'DELETE',
+                dataType: 'json'
+            };
+
+            return $.ajax(options).then(querySucceeded).fail(queryFailed);
+
+            function querySucceeded(data) {
+                log('Comment deleted from remote data source', data, true);
+            }
+        };
+
         var dataservice = {
             getPosts: getPosts,
             savePost: savePost,
             getPostById: getPostById,
             updatePost: updatePost,
-            deletePost: deletePost
+            deletePost: deletePost,
+            getComment: getComment,
+            saveComment: saveComment,
+            updateComment: updateComment,
+            deleteComment: deleteComment
         };
 
         return dataservice;

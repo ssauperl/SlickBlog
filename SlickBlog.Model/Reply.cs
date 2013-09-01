@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SlickBlog.Models
 {
-    public class Comment
+    public class Reply
     {
         public string Id { get; set; }
         public string UserId { get; set; }
@@ -14,6 +15,5 @@ namespace SlickBlog.Models
         public DateTimeOffset EditedOn { get; set; }
         [Required]
         public string Content { get; set; }
-        public Reply[] Replies { get; set; }
     }
 }

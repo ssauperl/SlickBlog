@@ -1,4 +1,7 @@
-﻿using Raven.Client;
+﻿using FlexProviders.Membership;
+using FlexProviders.Roles;
+using Ninject;
+using Raven.Client;
 using Raven.Client.Document;
 using System;
 using System.Collections.Generic;
@@ -9,34 +12,26 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using SlickBlog.Models;
 
 namespace Spa.Web.Controllers
 {
     public abstract class RavenDbController : ApiController
     {
-       
+        [Inject]
         public IDocumentSession RavenSession { get; set; }
-        public IDocumentStore DocumentStore { get; set; }
-
+        [Inject]
+        public IDocumentStore RavenStore { get; set; }
+        [Inject]
+        public IFlexUserStore<User> FlexUserStore { get; set; }
+        [Inject]
+        public IFlexRoleProvider FlexRoleProvider { get; set; }
 
         protected override void Initialize(System.Web.Http.Controllers.HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
-            if (DocumentStore == null)
-                DocumentStore = MvcApplication.DocumentStore;
-
-            if (RavenSession == null)
-                RavenSession = DocumentStore.OpenSession();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            using (RavenSession)
-            {
-                if (RavenSession != null)
-                    RavenSession.SaveChanges();
-            }
+            // Prevent data override. Handle "ConcurrencyException" on "RavenSession.SaveChanges();" call.
+            RavenSession.Advanced.UseOptimisticConcurrency = true;
         }
     }
 }

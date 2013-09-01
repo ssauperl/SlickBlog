@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SlickBlog.Model
+namespace SlickBlog.Models
 {
     public class Blog
     {

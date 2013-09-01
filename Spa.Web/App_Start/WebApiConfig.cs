@@ -1,6 +1,8 @@
 ﻿using FlexProviders.Membership;
 using System.Web.Http;
-using SlickBlog.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using SlickBlog.Models;
 using Thinktecture.IdentityModel.Http.Cors.WebApi;
 using Thinktecture.IdentityModel.Tokens.Http;
 
@@ -17,13 +19,7 @@ namespace Spa.Web.App_Start
 
         public void Register(HttpConfiguration config)
         {
-            //config.Routes.MapHttpRoute(
-            //    name: "CommentsRoute",
-            //    routeTemplate: "api/{controller}/{postId}/{commentId}",
-            //    defaults: new { postId = RouteParameter.Optional,
-            //                    commentId = RouteParameter.Optional
-            //    }
-            //);
+
 
             config.Routes.MapHttpRoute(
                 name: "AccountApi",
@@ -31,18 +27,21 @@ namespace Spa.Web.App_Start
                 defaults: new { controller = "Account", id = RouteParameter.Optional }
             );
 
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{id}/{subid}",
                 defaults: new { id = RouteParameter.Optional,
-                                id2 = RouteParameter.Optional
+                                subid = RouteParameter.Optional
                 }
             );
 
             // Basic Authentication and Cors support with Thinktecture Identity model
             ConfigureBasicAuth(config);
 
-            ConfigureCors(config);    
+            ConfigureCors(config);
+
+            ConfigureJson();
         }
 
         private void ConfigureBasicAuth(HttpConfiguration config)
@@ -71,6 +70,15 @@ namespace Spa.Web.App_Start
                 .ForAllOrigins()
                 .AllowAllMethods()
                 .AllowAllRequestHeaders();
+        }
+
+        private void ConfigureJson()
+        {
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            var jsonFormatter = formatters.JsonFormatter;
+            var settings = jsonFormatter.SerializerSettings;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

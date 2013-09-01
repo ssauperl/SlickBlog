@@ -1,5 +1,5 @@
-﻿define(['services/dataservice', 'plugins/router'],
-    function (dataservice, router) {
+﻿define(['services/dataservice', 'plugins/router', 'knockout'],
+    function (dataservice, router, ko) {
         //properties
         var posts = ko.observableArray();
 
@@ -20,8 +20,8 @@
 
         var gotoDetails = function (post) {
             //todo bind this with jquery on event
-            if (post && post.Id()) {
-                var url = '#/postdetail/' + post.Id();
+            if (post && post.id()) {
+                var url = '#/postdetail/' + post.id();
                 router.navigate(url);
             }
         };

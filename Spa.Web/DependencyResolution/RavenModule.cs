@@ -4,13 +4,16 @@ using FlexProviders.Aspnet;
 using FlexProviders.Membership;
 using FlexProviders.Raven;
 using FlexProviders.Roles;
-using SlickBlog.Model;
+using Raven.Client.Indexes;
+using SlickBlog.Models;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using Raven.Client;
 using Raven.Client.Document;
+using Spa.Web.Indexes;
+
 namespace Spa.Web.DependencyResolution
 {
     public class RavenModule : NinjectModule
@@ -39,6 +42,8 @@ namespace Spa.Web.DependencyResolution
 
         private void CheckForCoreData(IDocumentStore ds, IContext context)
         {
+
+            IndexCreation.CreateIndexes(typeof(Post_Sort).Assembly, ds);
             // In case the versioning bundle is installed, make sure it will version
             // only what we opt-in to version
             using (IDocumentSession s = ds.OpenSession())

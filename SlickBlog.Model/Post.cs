@@ -4,17 +4,18 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace SlickBlog.Model
+namespace SlickBlog.Models
 {
     public class Post
     {
         public string Id { get; set; }
-        public string BlogId { get; set; }
-        public string[] Users { get; set; }
+        public string UserId { get; set; }
+        public DateTimeOffset PostedOn { get; set; }
+        public DateTimeOffset EditedOn { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
-        public string ContentText { get; set; }
+        public string Content { get; set; }
         public string[] Tags { get; set; }
         public Comment[] Comments { get; set; }
     }

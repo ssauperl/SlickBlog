@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Security;
 using System.Threading;
 using FlexProviders.Membership;
-using SlickBlog.Model;
+using SlickBlog.Models;
 using FlexProviders.Roles;
 using System.Configuration;
 using System.Linq;
@@ -21,7 +21,7 @@ using Spa.Web.Filters;
 
 namespace Spa.Web.Controllers{
 
-    public class AccountController : RavenDbController
+    public class AccountController: ApiController
     {
         private readonly IFlexMembershipProvider<User> _membershipProvider;
         private readonly IFlexOAuthProvider<User> _oAuthProvider;
@@ -57,8 +57,10 @@ namespace Spa.Web.Controllers{
                 IPrincipal principal = new GenericPrincipal(new GenericIdentity(credential.UserName), _roleProvider.GetRolesForUser(credential.UserName));
                 Thread.CurrentPrincipal = principal;
                 HttpContext.Current.User = principal;
+                var user = _userStore.GetUserByUsername(credential.UserName);
                 return new UserInfo
                 {
+                    UserId = user.Id,
                     IsAuthenticated = true,
                     UserName = credential.UserName,
                     Roles = _roleProvider.GetRolesForUser(credential.UserName)
@@ -93,6 +95,7 @@ namespace Spa.Web.Controllers{
             // return user not already authenticated
             return new UserInfo
             {
+                UserId = "",
                 IsAuthenticated = false,
                 UserName = "",
                 Roles = new string[] { }
@@ -119,8 +122,10 @@ namespace Spa.Web.Controllers{
                 IPrincipal principal = new GenericPrincipal(new GenericIdentity(model.UserName), _roleProvider.GetRolesForUser(model.UserName));
                 Thread.CurrentPrincipal = principal;
                 HttpContext.Current.User = principal;
+                
                 return new UserInfo()
                 {
+                    UserId = _userStore.GetUserByUsername(model.UserName).Id,
                     IsAuthenticated = true,
                     UserName = model.UserName,
                     Roles = new string[] { ConfigurationManager.AppSettings["DefaultRole"] }
@@ -144,6 +149,7 @@ namespace Spa.Web.Controllers{
             {
                 return new UserInfo
                 {
+                    UserId = _userStore.GetUserByUsername(User.Identity.Name).Id,
                     IsAuthenticated = true,
                     UserName = User.Identity.Name,
                     Roles = _roleProvider.GetRolesForUser(User.Identity.Name)
@@ -327,6 +333,7 @@ namespace Spa.Web.Controllers{
 
                 return new UserInfo()
                 {
+                    UserId = _userStore.GetUserByUsername(model.UserName).Id,
                     IsAuthenticated = true,
                     Roles = new string[] { ConfigurationManager.AppSettings["DefaultRole"] },
                     UserName = model.UserName

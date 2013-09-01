@@ -14,10 +14,10 @@ namespace Spa.Web.App_Start
             , "~/Scripts/knockout.mapping-latest.js"
             , "~/Scripts/knockout.validation.js"
             , "~/Scripts/sammy-{version}.js"
-            , "~/Scripts/amplify.js"
             , "~/Scripts/bootstrap.js"
-            , "~/Scripts/tooltip.js"
             , "~/Scripts/toastr.js"
+            , "~/Scripts/wysihtml5/parser_rules/advanced.js"
+            , "~/Scripts/wysihtml5/wysihtml5-{version}.js"
             ));
             
 
@@ -27,6 +27,7 @@ namespace Spa.Web.App_Start
             , "~/Content/fontawesome/font-awesome.less"
             , "~/Content/toastr.less"
             , "~/Content/durandal.less"
+            , "~/Content/slick.less"
             );
 
             

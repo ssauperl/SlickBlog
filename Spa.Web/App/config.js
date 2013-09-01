@@ -1,13 +1,14 @@
-﻿define(function() {
+﻿define(['toastr'], function (toastr) {
     //toastr config
     toastr.options.timeOut = 4000;
     toastr.options.positionClass = 'toast-top-right';
 
     //ko validation config
-    ko.validation.configure({
-        decorateElement: true,
-        errorElementClass: 'has-error'
-    });
+    //ko.validation.configure({
+    //    decorateElement: true,
+    //    errorElementClass: 'has-error'
+    //});
+
 
     //route config
     var routes = [{
@@ -19,25 +20,21 @@
             route: 'postadd',
             moduleId: 'viewmodels/postedit',
             title: 'Add Post',
-            nav: true//,
-            //authorize: ["admin"]
+            nav: true,
+            authorize: ["admin"]
         }, {
             route: 'postedit(/:id)',
             moduleId: 'viewmodels/postedit',
             name: 'edit post',
-            nav: false//,
-            //authorize: ["admin"]
+            nav: false,
+            authorize: ["admin"]
         }, {
             route: 'postdetail/:id',
             moduleId: 'viewmodels/postdetail',
             title: 'Edit false',
             nav: false
-        }, {
-            route: 'tagsedit',
-            moduleId: 'viewmodels/tagsedit',
-            title: 'Edit tags',
-            nav: false
-        }, {
+        },
+        {
             route: 'login',
             moduleId: 'viewmodels/account/login',
             title: 'Login',

@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DD73C0
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlickBlog.Model", "SlickBlog.Model\SlickBlog.Model.csproj", "{AEF4B5FC-6398-4D80-A1F1-B3EED694807C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlickBlog.Models", "SlickBlog.Model\SlickBlog.Models.csproj", "{AEF4B5FC-6398-4D80-A1F1-B3EED694807C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spa.Web", "Spa.Web\Spa.Web.csproj", "{10B2E16A-C7A4-45FE-A2E1-746D130747A7}"
 EndProject

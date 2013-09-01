@@ -1,26 +1,26 @@
-﻿define(['durandal/app', 'services/dataservice', 'plugins/router', 'viewmodels/tagsedit'],
-    function (app, dataservice, router, tagsedit) {
+﻿define(['durandal/app', 'services/dataservice', 'plugins/router', 'knockout', 'viewmodels/tagsedit', 'services/ko.bindingHandlers'],
+    function (app, dataservice, router, ko, tagsedit, bindingHandlers) {
         //properties
-        var Id = ko.observable(),
-            Title = ko.observable().extend({ required: true }),
-            ContentText = ko.observable().extend({ required: true }),
-            Tags = ko.observableArray();
+        var id = ko.observable(),
+            title = ko.observable().extend({ required: true }),
+            content = ko.observable().extend({ required: true }),
+            tags = ko.observableArray();
 
         //local properties
         var isModified = ko.computed(function () {
-                if (Title.isModified() || ContentText.isModified())
-                    return true
-                else
-                    return false
-            });
+            if (title.isModified() || content.isModified())
+                return true;
+            else
+                return false;
+        });
 
         var isSaving = ko.observable(false);
         var canSave = ko.computed(function () {
-                return !isSaving();
-            });
+            return !isSaving();
+        });
 
         var editMode = ko.computed(function () {
-            if (Id())
+            if (id())
                 return true;
             else
                 return false;
@@ -30,11 +30,11 @@
 
         //post vm
         var post = {
-                Id: Id,
-                Title: Title,
-                ContentText: ContentText,
-                Tags: Tags,
-                isModified: isModified
+            id: id,
+            title: title,
+            content: content,
+            tags: tags,
+            isModified: isModified
         };
 
         ko.validation.group(post, { deep: true });
@@ -43,13 +43,13 @@
         var activate = function (id) {
             if (id) {
                 dataservice.getPostById(id, post).then(function () {
-                    tagsedit.tags(post.Tags());
+                    tagsedit.tags(post.tags());
                     resetModified();
                 });
-            }
-            else {
+            } else {
                 initPost();
             }
+
 
         };
 
@@ -60,22 +60,29 @@
                     .then(function (selectedOption) {
                         return selectedOption;
                     });
-            }
-            else
+            } else
                 return true;
+        };
+
+        var bindingComplete = function (view) {
+            //var editor = new wysihtml5.Editor("postContent", {
+            //    // id of textarea element
+            //    toolbar: "wysihtml5-toolbar", // id of toolbar element
+            //    parserRules: wysihtml5ParserRules // defined in parser rules set 
+            //});
         };
 
         //local methods
         var resetModified = function () {
-            Title.isModified(false);
-            ContentText.isModified(false);
+            title.isModified(false);
+            content.isModified(false);
         };
 
         var initPost = function () {
-            Id('');
-            Title('');
-            ContentText('');
-            Tags([]);
+            id('');
+            title('');
+            content('');
+            tags([]);
 
             resetModified();
             tagsedit.initTags();
@@ -86,24 +93,22 @@
         };
 
 
-        save = function () {
+        var save = function () {
             isSaving(true);
             if (post.isValid()) {
-                post.Tags(tagsedit.tags());
-                if (post.Id()) {
-                    dataservice.updatePost(post.Id(), post).then(complete);
-                }
-                else {
+                post.tags(tagsedit.tags());
+                if (post.id()) {
+                    dataservice.updatePost(post.id(), post).then(complete);
+                } else {
                     dataservice.savePost(post).then(goToEditView).then(complete);
                 }
-            }
-            else {
+            } else {
                 post.errors.showAllMessages();
-                complete();                  
+                complete();
             }
-                    
+
             function goToEditView(result) {
-                
+
                 //router.replaceLocation('#/postedit/' + post.Id());
             }
 
@@ -115,7 +120,7 @@
 
 
         var deletePost = function () {
-            var msg = 'Delete post "' + post.Title() + '" ?';
+            var msg = 'Delete post "' + post.title() + '" ?';
             var title = 'Confirm Delete';
             isDeleting(true);
             return app.showMessage(msg, title, ['Yes', 'No'])
@@ -123,7 +128,7 @@
 
             function confirmDelete(selectedOption) {
                 if (selectedOption === 'Yes') {
-                    dataservice.deletePost(post.Id()).then(success).fail(failed);
+                    dataservice.deletePost(post.id()).then(success).fail(failed);
 
                     function success() {
                         resetModified();
@@ -145,12 +150,12 @@
             }
 
         };
-   
 
 
         var vm = {
             activate: activate,
             canDeactivate: canDeactivate,
+            bindingComplete: bindingComplete,
             canSave: canSave,
             isDeleting: isDeleting,
             editMode: editMode,
@@ -161,7 +166,6 @@
             post: post,
             tagsedit: tagsedit
         };
-            
 
 
         return vm;

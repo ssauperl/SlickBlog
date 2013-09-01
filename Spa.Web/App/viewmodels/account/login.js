@@ -88,7 +88,7 @@ define(['services/appsecurity', 'plugins/router', 'services/utils', 'services/er
              * @param {object} event
             */
             externalLogin: function (parent, data, event) {
-                appsecurity.externalLogin(data.Provider, this.returnUrl());
+                appsecurity.externalLogin(data.provider, this.returnUrl());
             },
 
             /**
@@ -99,21 +99,21 @@ define(['services/appsecurity', 'plugins/router', 'services/utils', 'services/er
             */
             socialIcon: function (data) {
                 var icon = "";
-                switch (data.Provider.toLowerCase()) {
+                switch (data.provider.toLowerCase()) {
                     case "facebook":
-                        icon = "icon-facebook-sign"
+                        icon = "icon-facebook-sign";
                         break;
                     case "twitter":
-                        icon = "icon-twitter-sign"
+                        icon = "icon-twitter-sign";
                         break;
                     case "google":
-                        icon = "icon-google-plus-sign"
+                        icon = "icon-google-plus-sign";
                         break;
                     case "microsoft":
-                        icon = "icon-envelope"
+                        icon = "icon-envelope";
                         break;
                     default:
-                        icon = "icon-check-sign"
+                        icon = "icon-check-sign";
                 }
                 return icon;
             }

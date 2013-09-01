@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FlexProviders.Membership;
 
-namespace SlickBlog.Model
+namespace SlickBlog.Models
 {
     public class User : IFlexMembershipUser
     {

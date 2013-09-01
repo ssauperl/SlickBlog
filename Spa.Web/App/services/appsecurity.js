@@ -5,8 +5,8 @@
 	* @requires router
 */
 
-define(['durandal/system', 'durandal/app', 'plugins/router'],
-    function (system, app, router) {
+define(['durandal/system', 'durandal/app', 'plugins/router', 'knockout'],
+    function (system, app, router, ko) {
 		
 	var self = this;
 	
@@ -23,7 +23,7 @@ define(['durandal/system', 'durandal/app', 'plugins/router'],
         this.rememberMe = rememberme;
     },	
         /** @property {observable} user - Remember always to check again in server because this info can be tampered easily */
-        user = ko.observable({ IsAuthenticated: false, UserName: "", Roles: [], AntiforgeryToken: null }),
+        user = ko.observable({userId: "", isAuthenticated: false, userName: "", roles: [], antiforgeryToken: null }),
         /** @property {observable} externalLogins - External Logins container */
         externalLogins = ko.observable(),
         /**
@@ -33,7 +33,7 @@ define(['durandal/system', 'durandal/app', 'plugins/router'],
 	*/
         addAntiForgeryTokenToAjaxRequests = function() {
             $.get(baseAdress + "/getantiforgerytokens").then(function(token) {
-                user().AntiforgeryToken = token;
+                user().antiforgeryToken = token;
                 $(document).ajaxSend(function(event, request, options) {
                     if (options.hasContent) {
                         request.setRequestHeader("__RequestVerificationToken", token);
@@ -57,7 +57,7 @@ define(['durandal/system', 'durandal/app', 'plugins/router'],
 			var self = this,
 				  isuserinrole = false;
 			$.each(roles, function (key, value) {
-				if (self.user().Roles.indexOf(value) != -1) {
+				if (self.user().roles.indexOf(value) != -1) {
 					isuserinrole = true;
 				}
 			});
@@ -87,7 +87,7 @@ define(['durandal/system', 'durandal/app', 'plugins/router'],
 					}
 				})
 				.fail(function (data) {
-					self.user({ IsAuthenticated: false, UserName: "", Roles: [] });
+					self.user({userId: "", isAuthenticated: false, userName: "", roles: [] });
 				});
 
 			return promise;

@@ -1,33 +1,70 @@
-﻿define(['services/dataservice',
-        'plugins/router',
-        'durandal/system',
-        'durandal/app',
-        'services/logger'],
-    function (dataservice, router, system, app, logger) {
+﻿define(['services/dataservice', 'plugins/router', 'durandal/system', 'durandal/app', 'services/logger', 'viewmodels/comment'],
+    function (dataservice, router, system, app, logger, vmComment) {
         //properties
         var post = new Object();
-        var deferred = $.Deferred();
+        var comment = ko.validatedObservable(new vmComment());
 
         //durandal methods
         var activate = function (id) {
-                dataservice.getPostById(id, post).always(function () { deferred.resolve(); });;
-                return deferred.promise();
+            return refresh(id);
+        };
+        
+        //local methods
+        var refresh = function(id) {
+            return dataservice.getPostById(id, post);
         };
 
-        //local methods
+        //post methods
         var select = function () {
-            if (post && post.Id()) {
-                var url = '#/postedit/' + post.Id();
+            if (post && post.id()) {
+                var url = '#/postedit/' + post.id();
                 router.navigate(url);
             }
+        };
+        
+        //comments methods
+        var editComment = function () {
+            return dataservice.getComment(post.id(), this.id(), comment);
+        };
+        
+        var saveComment = function () {
+            if (comment.isValid()) {
+                if (comment().id)
+                    return dataservice.updateComment(post.id(), comment).then(complete);
+                else 
+                    return dataservice.saveComment(post.id(), comment).then(complete);
+                
+                function complete() {
+                    refresh(post.id()).then(function () {
+                        comment(new vmComment());
+                    });
+                }
+
+            }
+            else {
+                comment.errors.showAllMessages();
+            }
+        };
+
+        var deleteComment = function() {
+            return dataservice.deleteComment(post.id(), this.id()).then(function() {
+                refresh(post.id());
+            });
+        };
+
+        var dismissComment = function() {
+            comment(new vmComment());
         };
 
         var vm = {
             activate: activate,
-            //goBack: goBack,
             post: post,
             select: select,
-            title: 'Post Details'
+            comment: comment,
+            editComment: editComment,
+            saveComment: saveComment,
+            deleteComment: deleteComment,
+            dismissComment: dismissComment
         };
 
         return vm;

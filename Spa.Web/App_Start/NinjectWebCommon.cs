@@ -14,7 +14,7 @@ namespace Spa.Web.App_Start
     using FlexProviders.Roles;
     using FlexProviders.Raven;
     using FlexProviders.Aspnet;
-    using SlickBlog.Model;
+    using SlickBlog.Models;
     using System.Web.Http;
     using Spa.Web.DependencyResolution;
 

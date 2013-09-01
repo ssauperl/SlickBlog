@@ -1,12 +1,23 @@
-﻿
-<section class="posts" data-bind="foreach: posts">
+﻿<section class="posts" data-bind="foreach: posts">
     <article class="post">
-        <h1 class="post-title">
-            <a data-bind="text: Title, click: $root.gotoDetails"></a>
-        </h1>
-        <div class="post-tags" data-bind="foreach: Tags">
-            <span class="badge" data-bind="text: $data"></span>
+        <header class="post-header">
+            <div class="post-title">
+                <h1>
+                    <a data-bind="text: title, click: $root.gotoDetails"></a>
+                </h1>
+            </div>
+            <div class="post-meta">
+                <time data-bind="text: postedOn"></time>
+                <span data-bind="text: userId"></span>
+            </div>
+        </header>
+
+        <div class="post-tags" data-bind="foreach: tags">
+            <span class="post-tag" data-bind="text: $data"></span>
         </div>
-        <div class="post-content" data-bind="text: ContentText"></div>
+        <div class="post-content" data-bind="html: content"></div>
+        <div class="post-actions">
+            <a data-bind="click: $root.gotoDetails">View comments</a>
+        </div>
     </article>
 </section>

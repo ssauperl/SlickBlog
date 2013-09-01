@@ -9,65 +9,64 @@
 define(['services/appsecurity', 'plugins/router', 'services/utils', 'services/errorhandler'],
 function (appsecurity, router, utils, errorhandler) {
 
-    var DisplayName = ko.observable(),
-        UserName = ko.observable().extend({ required: true }),
-        Email = ko.observable().extend({ required: true, email: true }),
-        ExternalLoginData = ko.observable(),
-        ReturnUrl = ko.observable();
-    
-    var viewmodel =  {
+    var displayName = ko.observable(),
+        userName = ko.observable().extend({ required: true }),
+        email = ko.observable().extend({ required: true, email: true }),
+        externalLoginData = ko.observable(),
+        returnUrl = ko.observable();
+
+    var viewmodel = {
         /** @property {observable} DisplayName */
-        DisplayName : DisplayName,
+        DisplayName: displayName,
         
-        /** @property {observable} UserName */         
-        UserName: UserName,
+        /** @property {observable} UserName */
+        userName: userName,
         
         /** @property {observable} Email - Email for the new user */
-        Email: Email,
+        email: email,
 
         /** @property {observable} ExternalLoginData - External login data from the provider */
-        ExternalLoginData: ExternalLoginData,
+        externalLoginData: externalLoginData,
         
         /** @property {observable} ReturnUrl - Return url for the success external login */
-        ReturnUrl: ReturnUrl,
+        returnUrl: returnUrl,
 
         /**
          * Activate view
          * @method
-        */  
-        activate: function () {
+        */
+        activate: function() {
             var self = this;
             ga('send', 'pageview', { 'page': window.location.href, 'title': document.title });
-            return appsecurity.getExternalLoginConfirmationData
-                (utils.getURLParameter("returnurl"),
-                 utils.getURLParameter("username"),
-                 utils.getURLParameter("provideruserid"),
-                 utils.getURLParameter("provider"))
-                    .then(function (data) {
-                        self.DisplayName(data.DisplayName);
-                        self.UserName(data.UserName.split("@")[0]);
-                        self.Email(data.UserName);
-                        self.ExternalLoginData(data.ExternalLoginData);
-                        self.ReturnUrl(data.ReturnUrl);
-               }).fail(self.handlevalidationerrors);
+            return appsecurity.getExternalLoginConfirmationData(utils.getURLParameter("returnurl"),
+                utils.getURLParameter("username"),
+                utils.getURLParameter("provideruserid"),
+                utils.getURLParameter("provider"))
+                .then(function(data) {
+                    self.DisplayName(data.DisplayName);
+                    self.userName(data.userName.split("@")[0]);
+                    self.email(data.userName);
+                    self.externalLoginData(data.externalLoginData);
+                    self.returnUrl(data.returnUrl);
+                }).fail(self.handlevalidationerrors);
         },
         
         /**
          * Confirm an exernal account
          * @method
         */
-        confirmexternalaccount: function () {
+        confirmexternalaccount: function() {
             var self = this;
             if (this.errors().length != 0) {
                 this.errors.showAllMessages();
                 return;
             }
-            appsecurity.confirmExternalAccount(self.DisplayName(), self.UserName(), self.Email(), self.ExternalLoginData())
-                .then(function (data) {                    
+            appsecurity.confirmExternalAccount(self.DisplayName(), self.userName(), self.email(), self.externalLoginData())
+                .then(function(data) {
                     router.navigate("/#/" + self.ReturnUrl());
                 }).fail(self.handlevalidationerrors);
-            }
-    }
+        }
+    };
     
     errorhandler.includeIn(viewmodel);
     

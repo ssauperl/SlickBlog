@@ -1,5 +1,5 @@
-﻿define(['durandal/system', 'services/logger', 'plugins/router', 'config', 'services/appsecurity', 'services/errorhandler'],
-    function (system, logger, router, config, appsecurity, errorhandler) {
+﻿define(['durandal/system', 'services/logger', 'plugins/router', 'services/appsecurity', 'services/errorhandler', 'ko.validation'],
+    function (system, logger, router, appsecurity, errorhandler) {
         var deferred = $.Deferred();
 
         var activate = function(){
@@ -8,7 +8,11 @@
             //    system.getModuleId(shell),
             //    true);
             
-
+            //ko validation config
+            ko.validation.configure({
+                decorateElement: true,
+                errorElementClass: 'has-error'
+            });
             
 
             // Get current auth info

@@ -96,7 +96,7 @@ define(['services/appsecurity', 'services/errorhandler', 'services/logger'], fun
         */
         removeExternalAccount: function (parent, data, event) {
             var self = this;
-            appsecurity.dissasociate(data.Provider, data.ProviderUserId)
+            appsecurity.dissasociate(data.provider, data.providerUserId)
                    .then(function (message) {
                        logger.logSuccess(message, null, null, true);                       
                        appsecurity.externalAccounts()
@@ -120,8 +120,8 @@ define(['services/appsecurity', 'services/errorhandler', 'services/logger'], fun
             return $.when(appsecurity.hasLocalAccount(), appsecurity.externalAccounts(),appsecurity.getExternalLogins())
                 .then(function (haslocal, accounts, logins) {
                     self.hasAccount(haslocal[0]);
-                    self.externalAccounts(accounts[0].ExternalLogins);
-                    self.showRemoveButton(accounts[0].ShowRemoveButton);
+                    self.externalAccounts(accounts[0].externalLogins);
+                    self.showRemoveButton(accounts[0].showRemoveButton);
                     appsecurity.externalLogins(logins[0]);
                 })
                 .fail(self.handlevalidationerrors);
@@ -135,7 +135,7 @@ define(['services/appsecurity', 'services/errorhandler', 'services/logger'], fun
          * @param {object} event
         */
         externalLogin: function (parent, data, event) {
-            appsecurity.externalLogin(data.Provider, this.returnUrl())
+            appsecurity.externalLogin(data.provider, this.returnUrl())
                 .fail(self.log(data, true));
         },
 
@@ -147,7 +147,7 @@ define(['services/appsecurity', 'services/errorhandler', 'services/logger'], fun
         */
         socialIcon: function (data) {
             var icon = "";
-            switch (data.Provider.toLowerCase()) {
+            switch (data.provider.toLowerCase()) {
                 case "facebook":
                     icon = "icon-facebook-sign";
                     break;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FlexProviders.Roles;
 
-namespace SlickBlog.Model
+namespace SlickBlog.Models
 {
     public class Role : IFlexRole<string>
     {

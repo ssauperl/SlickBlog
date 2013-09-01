@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Web.WebPages.OAuth;
 using System.Configuration;
 using FlexProviders.Membership;
-using SlickBlog.Model;
+using SlickBlog.Models;
 using DotNetOpenAuth.AspNet.Clients;
 
 namespace Spa.Web.App_Start

@@ -10,22 +10,17 @@
 </head>
 <body>
     <div id="applicationHost">
-       @RenderPage("_splash.cshtml")
+        @RenderPage("_splash.cshtml")
     </div>
 
-
-    <footer class="row">
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p>Copyright &copy; @DateTime.Now.Year <a href="#">Simon Šauperl</a></p>
-            </div>
-        </div>
+    <footer class="container">
+        <p>Copyright &copy; @DateTime.Now.Year <a href="#">Simon Šauperl</a></p>
     </footer>
     @RenderPage("Analytics.cshtml")
 
-    @Scripts.Render(
+@*    @Scripts.Render(
         "~/bundles/libs"
-        )
+        )*@
     <script src="/Scripts/require.js" 
             data-main="App/main"></script>
 </body>
