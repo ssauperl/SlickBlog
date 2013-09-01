@@ -15,7 +15,7 @@
         <div class="post-tags" data-bind="foreach: tags">
             <span class="post-tag" data-bind="text: $data"></span>
         </div>
-        <div class="post-content" data-bind="text: content"></div>
+        <div class="post-content" data-bind="html: content"></div>
         <div class="post-actions">
             <button class="btn btn-default" data-bind="click: $parent.select">Edit post</button>
         </div>

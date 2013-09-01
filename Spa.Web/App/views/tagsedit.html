@@ -2,7 +2,7 @@
     <label for="inputTag" class="control-label">Add a Tag</label>
     <div class="row">
         <div class="col-lg-2">
-            <input type="text" id="inputTag" class="form-control" data-bind="value: tag, valueUpdate: 'afterkeydown', executeOnEnter: addTag" />
+            <input type="text" id="inputTag" class="form-control" data-bind="value: tag.name, valueUpdate: 'afterkeydown', executeOnEnter: addTag" />
         </div>
         <div class="col-lg-2">
             <button class="btn btn-info" data-bind="click: addTag">Add tag</button>

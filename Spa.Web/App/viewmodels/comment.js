@@ -1,4 +1,4 @@
-﻿define(function() {
+﻿define(['knockout', 'ko.validation'], function(ko) {
     var Comment = function() {
         self = this;
         self.id = null;

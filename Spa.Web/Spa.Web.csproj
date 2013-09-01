@@ -44,8 +44,11 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\WebGrease.1.3.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="dotless.Core">
-      <HintPath>..\packages\dotless.1.3.1.0\lib\dotless.Core.dll</HintPath>
+    <Reference Include="BundleTransformer.Core">
+      <HintPath>..\packages\BundleTransformer.Core.1.7.27\lib\net40\BundleTransformer.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="BundleTransformer.Less">
+      <HintPath>..\packages\BundleTransformer.Less.1.7.27\lib\net40\BundleTransformer.Less.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth.AspNet, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -81,6 +84,9 @@
     </Reference>
     <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.2.0.30506.0\lib\net40\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="MsieJavaScriptEngine">
+      <HintPath>..\packages\MsieJavaScriptEngine.1.1.2\lib\net40\MsieJavaScriptEngine.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -194,7 +200,6 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\LessTransform.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
@@ -243,15 +248,58 @@
     <Content Include="App\views\header.html" />
     <Content Include="App\views\postdetail.html" />
     <Content Include="App\views\detail.html" />
-    <Content Include="App\views\nav.html" />
     <Content Include="App\views\postedit.html" />
     <Content Include="App\views\shell.html" />
     <Content Include="App\views\posts.html" />
     <Content Include="Analytics.cshtml" />
-    <None Include="Content\durandal.less" />
+    <Content Include="Content\bootstrap\wells.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\bootstrap\utilities.less" />
+    <Content Include="Content\bootstrap\type.less" />
+    <Content Include="Content\bootstrap\tooltip.less" />
+    <Content Include="Content\bootstrap\thumbnails.less" />
+    <Content Include="Content\bootstrap\theme.less" />
+    <Content Include="Content\bootstrap\tables.less" />
+    <Content Include="Content\bootstrap\scaffolding.less" />
+    <Content Include="Content\bootstrap\responsive-utilities.less" />
+    <Content Include="Content\bootstrap\progress-bars.less" />
+    <Content Include="Content\bootstrap\print.less" />
+    <Content Include="Content\bootstrap\popovers.less" />
+    <Content Include="Content\bootstrap\panels.less" />
+    <Content Include="Content\bootstrap\pagination.less" />
+    <Content Include="Content\bootstrap\pager.less" />
+    <Content Include="Content\bootstrap\normalize.less" />
+    <Content Include="Content\bootstrap\navs.less" />
+    <Content Include="Content\bootstrap\navbar.less" />
+    <Content Include="Content\bootstrap\modals.less" />
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\media.less" />
+    <Content Include="Content\bootstrap\list-group.less" />
+    <Content Include="Content\bootstrap\labels.less" />
+    <Content Include="Content\bootstrap\jumbotron.less" />
+    <Content Include="Content\bootstrap\input-groups.less" />
+    <Content Include="Content\bootstrap\grid.less" />
+    <Content Include="Content\bootstrap\glyphicons.less" />
+    <Content Include="Content\bootstrap\forms.less" />
+    <Content Include="Content\bootstrap\dropdowns.less" />
+    <Content Include="Content\bootstrap\component-animations.less" />
+    <Content Include="Content\bootstrap\code.less" />
+    <Content Include="Content\bootstrap\close.less" />
+    <Content Include="Content\bootstrap\carousel.less" />
+    <Content Include="Content\bootstrap\buttons.less" />
+    <Content Include="Content\bootstrap\button-groups.less" />
+    <Content Include="Content\bootstrap\breadcrumbs.less" />
+    <Content Include="Content\bootstrap\bootstrap.less" />
+    <Content Include="Content\bootstrap\badges.less" />
+    <Content Include="Content\bootstrap\alerts.less" />
+    <Content Include="Content\bootstrap\slick-mixins.less" />
+    <None Include="BundleTransformer.Configuration.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="App\viewmodels\tagsedit.js" />
     <Content Include="App\views\tagsedit.html" />
     <Content Include="Content\durandal.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\images\icon.png" />
     <Content Include="Content\images\ios-startup-image-landscape.png" />
@@ -261,46 +309,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\toastr.less" />
     <Content Include="Content\font\EraserRegular.ttf" />
-    <Content Include="Content\less\accordion.less" />
-    <Content Include="Content\less\alerts.less" />
-    <Content Include="Content\less\bootstrap.less" />
-    <Content Include="Content\less\breadcrumbs.less" />
-    <Content Include="Content\less\button-groups.less" />
-    <Content Include="Content\less\buttons.less" />
-    <Content Include="Content\less\carousel.less" />
-    <Content Include="Content\less\close.less" />
-    <Content Include="Content\less\code.less" />
-    <Content Include="Content\less\component-animations.less" />
-    <Content Include="Content\less\dropdowns.less" />
-    <Content Include="Content\less\forms.less" />
-    <Content Include="Content\less\grid.less" />
-    <Content Include="Content\less\media.less" />
-    <Content Include="Content\less\mixins.less" />
-    <Content Include="Content\less\modals.less" />
-    <Content Include="Content\less\navbar.less" />
-    <Content Include="Content\less\navs.less" />
-    <Content Include="Content\less\pager.less" />
-    <Content Include="Content\less\pagination.less" />
-    <Content Include="Content\less\popovers.less" />
-    <Content Include="Content\less\progress-bars.less" />
-    <Content Include="Content\less\responsive-utilities.less" />
-    <Content Include="Content\less\scaffolding.less" />
-    <Content Include="Content\less\tables.less" />
-    <Content Include="Content\less\thumbnails.less" />
-    <Content Include="Content\less\tooltip.less" />
-    <Content Include="Content\less\type.less" />
-    <Content Include="Content\less\utilities.less" />
-    <Content Include="Content\less\variables.less" />
-    <Content Include="Content\less\wells.less" />
-    <Content Include="Content\less-app\colors.less" />
-    <Content Include="Content\less-app\custom-style.less" />
-    <Content Include="Content\less-app\slick-style.less" />
     <Content Include="index.cshtml" />
     <Content Include="Content\font\fontawesome-webfont.eot" />
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <Content Include="Content\font\FontAwesome.otf" />
-    <Content Include="Content\less\font-awesome.less" />
     <Content Include="Content\fontawesome\core.less" />
     <Content Include="Content\fontawesome\extras.less" />
     <Content Include="Content\fontawesome\font-awesome-ie7.less" />
@@ -309,8 +322,11 @@
     <Content Include="Content\fontawesome\mixins.less" />
     <Content Include="Content\fontawesome\path.less" />
     <Content Include="Content\fontawesome\variables.less" />
-    <Content Include="Content\less\slick-custom.less" />
     <Content Include="Content\slick.less" />
+    <Content Include="Content\fonts\EraserRegular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\almond-custom.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -338,6 +354,7 @@
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\knockout.validation.debug.js" />
+    <Content Include="Scripts\less-1.4.1.min.js" />
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
     <Content Include="Scripts\text.js" />
@@ -387,6 +404,9 @@
       <Name>SlickBlog.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -403,7 +423,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>35463</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:4038/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

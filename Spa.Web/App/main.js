@@ -7,6 +7,9 @@
         'knockout': '../Scripts/knockout-2.3.0',
         'ko.mapping': '../Scripts/knockout.mapping-latest',
         'ko.validation': '../Scripts/knockout.validation',
+        'ko.activity': '../Scripts/knockout.activity',
+        'ko.command': '../Scripts/knockout.command',
+        'ko.dirtyFlag': '../Scripts/knockout.dirtyFlag',
         'bootstrap': '../Scripts/bootstrap',
         'jquery': '../Scripts/jquery-2.0.3',
         'toastr': '../Scripts/toastr',
@@ -24,10 +27,7 @@
             deps: ['wysihtml5ParserRules'],
             exports: 'wysihtml5'
         },
-        //'bootstrap-wysihtml5': {
-        //    deps: ['wysihtml5'],
-        //    exports: 'bootstrap-wysihtml5'
-        //},
+        // doesn't work that way, requires global variable ko
         //'ko.validation': {
         //    deps: ['knockout'],
         //    exports: 'ko.validation'
@@ -35,6 +35,19 @@
         'ko.mapping': {
             deps: ['knockout'],
             exports: 'ko.mapping'
+        },
+        'ko.activity': {
+            deps: ['knockout'],
+            exports: 'ko.activity'
+        },
+        'ko.command': {
+            deps: ['knockout'],
+            exports: 'ko.command'
+        }
+        ,
+        'ko.dirtyFlag': {
+            deps: ['knockout'],
+            exports: 'ko.dirtyFlag'
         }
     }
 });
@@ -43,7 +56,7 @@
 //define('knockout', ko);
 
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/router', 'knockout', 'config', 'services/appsecurity'],
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/router', 'knockout', 'config', 'services/appsecurity', 'bootstrap'],
     function (system, app, viewLocator, router, ko, config, appsecurity) {
 
         // ensure KO is in the global namespace ('this')
@@ -69,8 +82,8 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/rout
         
         
         app.start().then(function () {
-            //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
-            //Look for partial views in a 'views' folder in the root.
+            // Replace 'viewmodels' in the moduleId with 'views' to locate the view.
+            // Look for partial views in a 'views' folder in the root.
             viewLocator.useConvention();
             
             //setup router

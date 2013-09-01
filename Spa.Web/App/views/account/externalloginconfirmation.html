@@ -5,20 +5,22 @@
     logging in.
 </div>
 <form data-bind="submit: confirmexternalaccount">
-    <div class="panel">
+    <div class="panel panel-default">
         <div class="panel-heading">
-            <h3>Associate your <span data-bind="text: displayName"></span> account</h3>
-        </div>    
-        <div class="form-group" data-bind="validationElement: userName">
-            <label class="control-label" for="userName">User name</label>        
-            <input class="form-control" type="text" id="userName" data-bind="value: userName" placeholder="User name">        
+            <h3>Associate your <span data-bind="text: displayName"></span>account</h3>
         </div>
-        <div class="form-group" data-bind="validationElement: Email">
-            <label class="control-label" for="email">Email</label>    
-            <input class="form-control" type="text" id="email" data-bind="value: email" placeholder="Email">    
+        <div class="panel-body">
+            <div class="form-group" data-bind="validationElement: userName">
+                <label class="control-label" for="userName">User name</label>
+                <input class="form-control" type="text" id="userName" data-bind="value: userName" placeholder="User name">
+            </div>
+            <div class="form-group" data-bind="validationElement: Email">
+                <label class="control-label" for="email">Email</label>
+                <input class="form-control" type="text" id="email" data-bind="value: email" placeholder="Email">
+            </div>
         </div>
         <div class="panel-footer">
-            <button type="submit" class="btn btn-primary" >Confirm account</button>    
-        </div>            
+            <button type="submit" class="btn btn-primary">Confirm account</button>
+        </div>
     </div>
 </form>

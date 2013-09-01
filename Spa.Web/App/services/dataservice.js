@@ -59,7 +59,7 @@
 
             function querySucceeded(data) {
                 //setting post.Id so we know where to redirect the user
-                postVm.id(data);
+                postVm().id(data);
                 log('Post saved to remote data source', data, true);
             }
         };
