@@ -29,8 +29,8 @@
             nav: false,
             authorize: ["admin"]
         }, {
-            route: 'postdetail/:id',
-            moduleId: 'viewmodels/postdetail',
+            route: 'postdetails/:id',
+            moduleId: 'viewmodels/postdetails',
             title: 'Edit false',
             nav: false
         },
@@ -54,7 +54,8 @@
             moduleId: 'viewmodels/account/register',
             title: 'Register',
             nav: false
-        }, {
+        },
+        {
             route: 'account',
             moduleId: 'viewmodels/account/account',
             title: 'Account',

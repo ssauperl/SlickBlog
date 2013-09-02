@@ -10,7 +10,7 @@ namespace SlickBlog.Models
     public class Reply
     {
         public string Id { get; set; }
-        public string UserId { get; set; }
+        public DenormalizedUser User { get; set; }
         public DateTimeOffset PostedOn { get; set; }
         public DateTimeOffset EditedOn { get; set; }
         [Required]

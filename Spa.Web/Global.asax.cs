@@ -20,6 +20,7 @@ namespace Spa.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth(); 
+            AutoMapperConfig.Configure();
         } 
     }
 }

@@ -2,10 +2,12 @@
     function (dataservice, router, system, app, logger, vmComment) {
         //properties
         var post = new Object();
-        var comment = ko.validatedObservable(new vmComment());
+        var comment = ko.observable(new vmComment());
 
         //durandal methods
         var activate = function (id) {
+            comment(new vmComment());
+            ko.validation.group(comment());
             return refresh(id);
         };
         
@@ -28,7 +30,7 @@
         };
         
         var saveComment = function () {
-            if (comment.isValid()) {
+            if (comment().isValid()) {
                 if (comment().id)
                     return dataservice.updateComment(post.id(), comment).then(complete);
                 else 
@@ -37,12 +39,13 @@
                 function complete() {
                     refresh(post.id()).then(function () {
                         comment(new vmComment());
+                        ko.validation.group(comment());
                     });
                 }
 
             }
             else {
-                comment.errors.showAllMessages();
+                comment().errors.showAllMessages();
             }
         };
 

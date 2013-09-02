@@ -21,7 +21,7 @@
         var gotoDetails = function (post) {
             //todo bind this with jquery on event
             if (post && post.id()) {
-                var url = '#/postdetail/' + post.id();
+                var url = '#/postdetails/' + post.id();
                 router.navigate(url);
             }
         };

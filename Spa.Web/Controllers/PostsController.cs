@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Linq;
 using System.Web.UI.WebControls;
+using AutoMapper;
 using Raven.Client;
 using SlickBlog.Models;
 using System.Collections.Generic;
@@ -18,12 +19,8 @@ namespace Spa.Web.Controllers
         [AllowAnonymous]
         public IEnumerable<Post> Get()
         {
-            var posts = RavenSession.Query<Post>().Customize(x => x.Include<Post>(p => p.UserId)).OrderByDescending(post => post.PostedOn);
-            foreach (var post in posts)
-            {
-                // this will not require querying the server!
-                var cust = RavenSession.Load<User>(post.UserId);
-            }
+            var posts = RavenSession.Query<Post>().OrderByDescending(post => post.PostedOn);
+
             return posts;
         }
 
@@ -43,7 +40,9 @@ namespace Spa.Web.Controllers
             // We need to make sure Id is null, if string is empty raven will generate guid as id (we don't want that)
             post.Id = null;
             var user = FlexUserStore.GetUserByUsername(User.Identity.Name);
-            post.UserId = user.Id;
+
+            var denormalizedUser = Mapper.Map<DenormalizedUser>(user);
+            post.User = denormalizedUser;
             post.PostedOn = DateTime.UtcNow;
             RavenSession.Store(post);
             RavenSession.SaveChanges();
@@ -62,7 +61,11 @@ namespace Spa.Web.Controllers
 
             var post = RavenSession.Load<Post>(id);
             var user =  FlexUserStore.GetUserByUsername(User.Identity.Name);
-            post.UserId = user.Id;
+            
+            // overriding user is probably not needed
+            var denormalizedUser = Mapper.Map<DenormalizedUser>(user);
+            post.User = denormalizedUser;
+
             post.Title = updatedPost.Title;
             post.Content = updatedPost.Content;
             post.Tags = updatedPost.Tags;

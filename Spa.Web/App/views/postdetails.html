@@ -8,7 +8,7 @@
             </div>
             <div class="post-meta">
                 <time data-bind="text: postedOn"></time>
-                <span data-bind="text: userId"></span>
+                <span data-bind="text: user.username"></span>
             </div>
         </header>
 
@@ -27,7 +27,7 @@
         <div class="post-comment-meta">
             <span data-bind="text: id"></span>
             <span data-bind="text: postedOn"></span>
-            <span data-bind="text: userId"></span>
+            <span data-bind="text: user.username"></span>
         </div>
         <div class="post-comment-content" data-bind="text: content"></div>
         <div class="post-comment-actions">

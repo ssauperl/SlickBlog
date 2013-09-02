@@ -2,7 +2,7 @@
     var Post = function() {
         var self = this;
         self.id = ko.observable();
-        self.userId = ko.observable();
+        self.user = ko.observable();
         self.title = ko.observable().extend({ required: true });
         self.content = ko.observable().extend({ required: true });
         self.tags = ko.observableArray([]);

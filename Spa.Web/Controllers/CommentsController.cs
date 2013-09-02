@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using Microsoft.Ajax.Utilities;
 using Raven.Abstractions.Exceptions;
 using Raven.Client.Indexes;
@@ -45,7 +46,8 @@ namespace Spa.Web.Controllers
                 comment.Id = RavenStore.Conventions.GenerateDocumentKey(documentSession.DatabaseName,
                     documentSession.DatabaseCommands, comment);
 
-                comment.UserId = user.Id;
+                var denormalizedUser = Mapper.Map<DenormalizedUser>(user);
+                comment.User = denormalizedUser;
                 comment.PostedOn = DateTime.UtcNow;
                 
                 //add new comment
@@ -78,7 +80,7 @@ namespace Spa.Web.Controllers
             //update existing comment
             var post = RavenSession.Load<Post>(id);
 
-            if (user.Id != post.UserId && !FlexRoleProvider.IsUserInRole(user.Username, "admin"))
+            if (user.Id != post.User.Id && !FlexRoleProvider.IsUserInRole(user.Username, "admin"))
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "You dont have permission to edit this comment"));
 
 
