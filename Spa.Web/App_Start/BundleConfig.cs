@@ -31,6 +31,7 @@ namespace Spa.Web.App_Start
                 , "~/Content/fontawesome/font-awesome.less"
                 , "~/Content/toastr.less"
                 , "~/Content/durandal.css"
+                , "~/Content/stylesheet.css"
                 , "~/Content/slick.less");
 
             //commonStylesBundle.Transforms.Add(new CssTransformer());

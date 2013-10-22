@@ -10,11 +10,11 @@
         'ko.activity': '../Scripts/knockout.activity',
         'ko.command': '../Scripts/knockout.command',
         'ko.dirtyFlag': '../Scripts/knockout.dirtyFlag',
-        'bootstrap': '../Scripts/bootstrap',
-        'jquery': '../Scripts/jquery-2.0.3',
+        'bootstrap': '../Scripts/bootstrap.min',
+        'jquery': '../Scripts/jquery-2.0.3.min',
         'toastr': '../Scripts/toastr',
         'wysihtml5ParserRules': '../Scripts/wysihtml5/parser_rules/advanced',
-        'wysihtml5': '../Scripts/wysihtml5/wysihtml5-0.3.0'
+        'wysihtml5': '../Scripts/wysihtml5/wysihtml5-0.3.0.min'
         
     }
     ,
@@ -56,8 +56,8 @@
 //define('knockout', ko);
 
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/router', 'knockout', 'config', 'services/appsecurity', 'bootstrap'],
-    function (system, app, viewLocator, router, ko, config, appsecurity) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/router', 'plugins/widget', 'knockout', 'config', 'services/appsecurity', 'bootstrap'],
+    function (system, app, viewLocator, router, widget, ko, config, appsecurity) {
 
         // ensure KO is in the global namespace ('this')
         if (!this.ko) {
@@ -75,10 +75,10 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'plugins/rout
             router: true,
             dialog: true,
             widget: {
-                kinds: ['expander']
+                kinds: ['texteditor']
             }
         });
-
+        //widget.registerKind('texteditor');
         
         
         app.start().then(function () {

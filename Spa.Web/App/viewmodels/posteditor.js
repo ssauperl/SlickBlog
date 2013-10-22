@@ -1,4 +1,4 @@
-﻿define(['durandal/app', 'services/dataservice', 'plugins/router', 'jquery', 'knockout', 'viewmodels/post', 'viewmodels/tag', 'services/ko.bindingHandlers', 'ko.validation', 'ko.command', 'ko.activity'],
+﻿define(['durandal/app', 'services/dataservice', 'plugins/router', 'jquery', 'knockout', 'viewmodels/post', 'viewmodels/tag', 'ko.validation', 'ko.command', 'ko.activity'],
     function (app, dataservice, router, $, ko, vmPost, vmTag) {
         //properties
         var post = ko.observable(new vmPost());
@@ -68,28 +68,32 @@
         });
         
         var deleteCmd = ko.asyncCommand({
-                execute: function (complete) {
-                    $.when(dlt())
-                        .always(complete);
-                },
-                canExecute: function (isExecuting) {
-                    return !isExecuting && post().id();
-                }
-            });
+            execute: function (complete) {
+                $.when(dlt())
+                    .always(complete);
+            },
+            canExecute: function (isExecuting) {
+                return !isExecuting && post().id();
+            }
+        });
 
        //command helpers
         var save = function () {
             var deferredReady = $.Deferred();
             if (post().id()) {
-                dataservice.updatePost(post().id(), post).then(resolve);
+                dataservice.updatePost(post().id(), post).then(resetEditor).always(resolve);
             } else {
                 dataservice.savePost(post).then(resolve);
             }
  
-            function resolve() {
-                deferredReady.resolve();
+            function resetEditor() {
+                
                 post().dirtyFlag().reset();
                 //router.navigate('#/postedit/' + post.id(), { replace: true});
+            }
+
+            function resolve() {
+                deferredReady.resolve();
             }
             
             return deferredReady.promise();

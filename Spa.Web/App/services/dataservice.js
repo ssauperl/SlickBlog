@@ -1,5 +1,5 @@
-﻿define(['durandal/system', 'services/logger', 'knockout', 'ko.mapping'],
-    function (system, logger, ko, komapping) {
+﻿define(['durandal/system', 'services/logger', 'knockout', 'ko.mapping', 'services/mapper'],
+    function (system, logger, ko, komapping, mapper) {
         ko.mapping = komapping;
         
         //posts
@@ -15,11 +15,14 @@
 
             function querySucceeded(data) {
                 var mapping = {
-                    'postedOn': {
-                        update: function (options) {
-                            return new Date(options.data).toLocaleString();
-                        }
+                    create: function(options) {
+                        return new mapper.post(options.data);
                     }
+                    //'postedOn': {
+                    //    update: function (options) {
+                    //        return new Date(options.data).toLocaleString();
+                    //    }
+                    //}
                 };
 
                 ko.mapping.fromJS(data, mapping, postsObservable);
@@ -37,8 +40,13 @@
             return $.ajax(options).then(querySucceeded).fail(queryFailed);
 
             function querySucceeded(data) {
+                
                 var mapping = {
-                    'include': ["Comments"]
+                    'comments': {
+                        create: function(options) {
+                            return new mapper.comment(options.data);
+                        }
+                    }
                 };
 
                 ko.mapping.fromJS(data, mapping, postVm);

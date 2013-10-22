@@ -18,6 +18,7 @@
         <div class="post-content" data-bind="html: content"></div>
         <div class="post-actions">
             <a data-bind="click: $root.gotoDetails">View comments</a>
+            <button data-bind="visible: canEdit">Edit</button>
         </div>
     </article>
 </section>

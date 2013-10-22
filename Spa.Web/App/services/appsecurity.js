@@ -56,6 +56,11 @@ define(['durandal/system', 'durandal/app', 'plugins/router', 'knockout'],
 		isUserInRole: function (roles) {
 			var self = this,
 				  isuserinrole = false;
+		    
+		    // return right away if user is anonymous
+			if (!self.user().userId)
+			    return isuserinrole;
+		    
 			$.each(roles, function (key, value) {
 				if (self.user().roles.indexOf(value) != -1) {
 					isuserinrole = true;

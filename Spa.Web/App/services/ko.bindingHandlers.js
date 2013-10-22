@@ -3,6 +3,7 @@
         init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
             var control = new wysihtml5.Editor(element, {
                 toolbar: "wysihtml5-toolbar",
+                stylesheets: "Content/stylesheet.css",
                 parserRules: wysihtml5ParserRules // defined in parser rules set 
             });
 

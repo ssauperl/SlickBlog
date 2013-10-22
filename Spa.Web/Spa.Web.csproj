@@ -235,6 +235,7 @@
     <Content Include="App\services\errorhandler.js" />
     <Content Include="App\services\ko.bindingHandlers.js" />
     <Content Include="App\services\logger.js" />
+    <Content Include="App\services\mapper.js" />
     <Content Include="App\services\utils.js" />
     <Content Include="App\viewmodels\account\account.js" />
     <Content Include="App\viewmodels\account\externalloginconfirmation.js" />
@@ -259,6 +260,8 @@
     <Content Include="App\views\shell.html" />
     <Content Include="App\views\posts.html" />
     <Content Include="Analytics.cshtml" />
+    <Content Include="App\widgets\texteditor\view.html" />
+    <Content Include="App\widgets\texteditor\viewmodel.js" />
     <Content Include="Content\bootstrap\wells.less" />
     <Content Include="Content\bootstrap\variables.less" />
     <Content Include="Content\bootstrap\utilities.less" />
@@ -309,6 +312,7 @@
     <Content Include="Content\images\icon.png" />
     <Content Include="Content\images\ios-startup-image-landscape.png" />
     <Content Include="Content\images\ios-startup-image-portrait.png" />
+    <Content Include="Content\stylesheet.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Global.asax" />
@@ -391,7 +395,6 @@
     <Content Include="_splash.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\widgets\" />
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\app\" />
   </ItemGroup>

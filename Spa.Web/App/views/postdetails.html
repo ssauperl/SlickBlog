@@ -32,8 +32,8 @@
         <div class="post-comment-content" data-bind="text: content"></div>
         <div class="post-comment-actions">
             <button class="btn btn-default">reply</button>
-            <button class="btn btn-default" data-bind="click: $parent.editComment">edit</button>
-            <button class="btn btn-danger" data-bind="click: $parent.deleteComment">delete</button>
+            <button class="btn btn-default" data-bind="click: $parent.editComment, visible: canEdit">edit</button>
+            <button class="btn btn-danger" data-bind="command: $parent.deleteCmd, activity: isDeleting, visible: canEdit">delete</button>
         </div>
     </div>
 </section>
@@ -46,12 +46,12 @@
         <div class="form-group" data-bind="validationElement: content">
             <label for="commentContent" class="control-label">Content</label>
             <div class="control">
-                <textarea id="commentContent" class="form-control" rows="3" data-bind="value: content, valueUpdate: 'afterkeydown'"></textarea>
+                <div data-bind="texteditor: { fieldToEdit: content }"></div>
             </div>
         </div>
         <div class="form-group">
             <div class="control">
-                <button class="btn btn-default" data-bind="click: $parent.saveComment">Save</button>
+                <button class="btn btn-default" data-bind="command: $parent.saveCmd, activity: $parent.saveCmd.isExecuting">Save</button>
                 <button class="btn btn-default" data-bind="click: $parent.dismissComment">Cancel</button>
             </div>
         </div>
